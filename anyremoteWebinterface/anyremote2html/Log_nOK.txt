@@ -1,0 +1,25 @@
+nicht OK
+
+Wed Feb 23 20:25:38 2011 ===================== do_GET ===================== 0
+Wed Feb 23 20:25:38 2011 Got /Test.menu
+Converted /Test.menu
+Test
+dispatchToReader Msg:Test
+IL dispatchToReader Msg:Test
+needUpload= 0
+Wed Feb 23 20:25:38 2011 Continue sleep  0.1
+Wed Feb 23 20:25:38 2011 Send to anyRemote Msg:Test
+
+Wed Feb 23 20:25:38 2011 Continue sleep  0.2
+Wed Feb 23 20:25:38 2011 Got from anyRemote proceed =>  End();
+Wed Feb 23 20:25:38 2011 Got from anyRemote buffered =>  
+renderHtml  0
+CMD: >End(<
+CMD: ><
+Wed Feb 23 20:25:38 2011 CMD: >DONE<
+Wed Feb 23 20:25:38 2011 CMD: >FINALIZE<
+Wed Feb 23 20:25:38 2011 renderHtml finished
+Wed Feb 23 20:25:38 2011 Got HTML (takes 0.3 seconds)
+Wed Feb 23 20:25:38 2011 write responce
+localhost.localdomain - - [23/Feb/2011 20:25:38] "GET /Test.menu HTTP/1.1" 200 -
+Wed Feb 23 20:25:38 2011 ++++++++++++++++++++++++++++++++++++++++++++++++++

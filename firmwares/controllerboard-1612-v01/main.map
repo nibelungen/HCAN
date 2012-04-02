@@ -1,0 +1,917 @@
+Archive member included because of file (symbol)
+
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_mulsi3.o)
+                              heizung.o (__mulsi3)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodqi4.o)
+                              zentralheizungspumpe.o (__udivmodqi4)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodhi4.o)
+                              zentralheizungspumpe.o (__udivmodhi4)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodhi4.o)
+                              multitaster.o (__divmodhi4)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodsi4.o)
+                              heizung.o (__udivmodsi4)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodsi4.o)
+                              heizung.o (__divmodsi4)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+                              ../../canix/canix.o (__prologue_saves__)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+                              ../../canix/canix.o (__epilogue_restores__)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+                              /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o (exit)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_tablejump.o)
+                              ../../canix/canix.o (__tablejump2__)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_copy_data.o)
+                              ../../canix/canix.o (__do_copy_data)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+                              ../../canix/canix.o (__do_clear_bss)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strcat.o)
+                              ../../canix/syslog.o (strcat)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vsnprintf_p.o)
+                              ../../canix/syslog.o (vsnprintf_P)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+                              /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vsnprintf_p.o) (vfprintf)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+                              devices.o (__eerd_block_m644)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+                              ../../canix/canix.o (__eerd_byte_m644)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+                              ../../canix/hcan_hms.o (__eewr_byte_m644)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_word_atmega644.o)
+                              heizung.o (__eewr_word_m644)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen_P.o)
+                              /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o) (strnlen_P)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen.o)
+                              /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o) (strnlen)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(fputc.o)
+                              /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o) (fputc)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+                              /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o) (__ultoa_invert)
+
+Allocating common symbols
+Common symbol       size              file
+
+canix_sleep_ticker  0x4               ../../canix/canix.o
+canix_rtc_clock     0xd               ../../canix/canix.o
+device_data_ram_usage
+                    0x2               devices.o
+canix_rx_queue      0xa8              ../../canix/canix.o
+canix_loop_throughput_counter
+                    0x2               ../../canix/canix.o
+device_data         0x600             devices.o
+canix_loop_throughput
+                    0x2               ../../canix/canix.o
+pdevice_data        0x100             devices.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00020000         xr
+data             0x00800060         0x0000ffa0         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+Address of section .data set to 0x800100
+LOAD /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+LOAD ../../canix/canix.o
+LOAD ../../canix/mcp2515.o
+LOAD ../../canix/tools.o
+LOAD ../../canix/hcan_hms.o
+LOAD ../../canix/hcan_rts.o
+LOAD ../../canix/syslog.o
+LOAD ../../canix/eds.o
+LOAD ../../canix/mem_check.o
+LOAD darlingtonoutput.o
+LOAD devices.o
+LOAD dunstabzugport.o
+LOAD floatingAverage.o
+LOAD heizung.o
+LOAD helligkeitssensor.o
+LOAD lichtzone.o
+LOAD log.o
+LOAD main.o
+LOAD multitaster.o
+LOAD onewire.o
+LOAD poti.o
+LOAD powerportAutomat.o
+LOAD powerport.o
+LOAD reedkontakt.o
+LOAD rolladenAutomat.o
+LOAD rolladen.o
+LOAD rolladenSchlitzpos.o
+LOAD schalter.o
+LOAD shiftio.o
+LOAD tastdimmer.o
+LOAD taster.o
+LOAD tasterinput.o
+LOAD tempsensor.o
+LOAD timer.o
+LOAD timeservice.o
+LOAD zeitschaltuhr.o
+LOAD zeitzone.o
+LOAD zentralheizungspumpe.o
+LOAD /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a
+LOAD /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a
+LOAD /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x00000000     0x5fa2
+ *(.vectors)
+ .vectors       0x00000000       0x70 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+                0x00000000                __vectors
+                0x00000000                __vector_default
+ *(.vectors)
+ *(.progmem.gcc*)
+ .progmem.gcc_sw_table
+                0x00000070       0x18 ../../canix/canix.o
+ .progmem.gcc_sw_table
+                0x00000088       0x62 ../../canix/hcan_hms.o
+ .progmem.gcc_sw_table
+                0x000000ea       0x4c devices.o
+ .progmem.gcc_sw_table
+                0x00000136       0x10 helligkeitssensor.o
+ .progmem.gcc_sw_table
+                0x00000146       0x26 main.o
+ .progmem.gcc_sw_table
+                0x0000016c       0x10 poti.o
+ .progmem.gcc_sw_table
+                0x0000017c       0x18 rolladen.o
+ .progmem.gcc_sw_table
+                0x00000194       0x22 timer.o
+ *(.progmem*)
+ .progmem.data  0x000001b6       0x5e ../../canix/canix.o
+                0x000001b6                canix_version
+ .progmem.data  0x00000214       0x74 ../../canix/eds.o
+ .progmem.data  0x00000288       0x39 devices.o
+ .progmem.data  0x000002c1       0xeb heizung.o
+ .progmem.data  0x000003ac       0x37 helligkeitssensor.o
+ .progmem.data  0x000003e3       0x11 multitaster.o
+ .progmem.data  0x000003f4       0x2a poti.o
+ .progmem.data  0x0000041e       0x3c tempsensor.o
+ .progmem.data  0x0000045a       0x13 timer.o
+ .progmem.data  0x0000046d        0xc zentralheizungspumpe.o
+                0x0000047a                . = ALIGN (0x2)
+ *fill*         0x00000479        0x1 00
+                0x0000047a                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x0000047a        0x0 linker stubs
+ *(.trampolines*)
+                0x0000047a                __trampolines_end = .
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x0000047a                __ctors_start = .
+ *(.ctors)
+                0x0000047a                __ctors_end = .
+                0x0000047a                __dtors_start = .
+ *(.dtors)
+                0x0000047a                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x0000047a        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+                0x0000047a                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x0000047a        0xc /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ .init4         0x00000486       0x16 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_copy_data.o)
+                0x00000486                __do_copy_data
+ .init4         0x0000049c       0x10 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+                0x0000049c                __do_clear_bss
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ .init8         0x000004ac       0x10 ../../canix/mem_check.o
+                0x000004ac                __init8_mem
+ *(.init8)
+ *(.init9)
+ .init9         0x000004bc        0x8 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ *(.init9)
+ *(.text)
+ .text          0x000004c4        0x4 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+                0x000004c4                __vector_22
+                0x000004c4                __vector_1
+                0x000004c4                __vector_24
+                0x000004c4                __vector_12
+                0x000004c4                __bad_interrupt
+                0x000004c4                __vector_6
+                0x000004c4                __vector_3
+                0x000004c4                __vector_23
+                0x000004c4                __vector_25
+                0x000004c4                __vector_11
+                0x000004c4                __vector_13
+                0x000004c4                __vector_17
+                0x000004c4                __vector_19
+                0x000004c4                __vector_7
+                0x000004c4                __vector_27
+                0x000004c4                __vector_5
+                0x000004c4                __vector_4
+                0x000004c4                __vector_9
+                0x000004c4                __vector_2
+                0x000004c4                __vector_21
+                0x000004c4                __vector_15
+                0x000004c4                __vector_8
+                0x000004c4                __vector_26
+                0x000004c4                __vector_14
+                0x000004c4                __vector_10
+                0x000004c4                __vector_16
+                0x000004c4                __vector_20
+ .text          0x000004c8      0x89a ../../canix/canix.o
+                0x000004c8                canix_rxq_size
+                0x000004fc                canix_rxq_fetch_one
+                0x00000532                canix_rxq_put_one
+                0x00000568                canix_rtc_init
+                0x000005ac                canix_update_datetime
+                0x0000067c                canix_is_date_valid
+                0x0000068c                canix_deliver_frame
+                0x000006f6                canix_reset
+                0x0000070e                canix_process_messages
+                0x000007ae                canix_sleep_100th
+                0x000007f8                canix_mainloop
+                0x0000081a                canix_reg_rtc_callback
+                0x00000866                canix_reg_idle_callback
+                0x000008b2                canix_reg_frame_callback
+                0x00000924                canix_frame_send_with_prio
+                0x000009c0                canix_frame_send
+                0x000009c8                canix_selfaddr
+                0x00000a0c                canix_init
+                0x00000ae6                __vector_18
+ .text          0x00000d62      0x524 ../../canix/mcp2515.o
+                0x00000d62                spi_init
+                0x00000d74                spi_putc
+                0x00000d80                spi_getc
+                0x00000d8c                can_enable_mcp2515
+                0x00000d90                can_disable_mcp2515
+                0x00000d94                mcp2515_bit_modify
+                0x00000dc6                mcp2515_read_register
+                0x00000dee                mcp2515_write_register
+                0x00000e16                mcp2515_set_mode
+                0x00000e38                mcp2515_write_register_p
+                0x00000e70                mcp2515_read_register_p
+                0x00000ea8                can_sendable
+                0x00000ec2                can_send_message
+                0x00000ffa                can_any_sendable
+                0x00001024                mcp2515_message_available
+                0x0000102e                mcp2515_read_message
+                0x00001108                can_error_counters
+                0x0000112a                can_message_available
+                0x00001138                can_read_message
+                0x00001220                can_open_interface
+ .text          0x00001286       0x90 ../../canix/tools.o
+                0x00001286                delay
+                0x0000129c                _delayFourCycles
+                0x000012aa                time_matches
+ .text          0x00001316      0x372 ../../canix/hcan_hms.o
+                0x00001316                canix_SFP_HMS_handler
+ .text          0x00001688      0x180 ../../canix/hcan_rts.o
+                0x00001688                canix_SFP_RTS_handler
+ .text          0x00001808      0x116 ../../canix/syslog.o
+                0x00001808                canix_set_syslog_level
+                0x0000180e                canix_syslog_P
+ .text          0x0000191e      0x54c ../../canix/eds.o
+                0x0000191e                eds_read_string
+                0x00001974                eds_next_block
+                0x00001994                eds_find_next_block_between
+                0x000019f0                eds_find_next_block
+                0x00001a3c                eds_defragment
+                0x00001aca                eds_free
+                0x00001af8                eds_alloc
+                0x00001ba2                eds_format
+                0x00001c62                eds_can_callback
+                0x00001dde                eds_init
+ .text          0x00001e6a       0x20 ../../canix/mem_check.o
+                0x00001e6a                get_mem_unused
+ .text          0x00001e8a       0xb2 darlingtonoutput.o
+                0x00001e8a                darlingtonoutput_setpin
+                0x00001ef2                darlingtonoutput_getpin
+                0x00001f22                darlingtonoutput_init
+ .text          0x00001f3c      0x2a4 devices.o
+                0x00001f3c                devices_init
+                0x00001f5c                devices_load_config
+ .text          0x000021e0      0x114 dunstabzugport.o
+                0x000021e0                dunstabzugport_timer_handler
+                0x00002200                dunstabzugport_init
+                0x00002216                dunstabzugport_can_callback
+ .text          0x000022f4       0x88 floatingAverage.o
+                0x000022f4                initFloatAvg
+                0x00002312                addToFloatAvg
+                0x00002334                getOutputValue
+ .text          0x0000237c      0x8ec heizung.o
+                0x0000237c                heizung_get_pwm
+                0x000023b4                heizung_check_ventilpflege
+                0x0000244a                heizung_update_heizstop
+                0x00002498                heizung_set_pwm
+                0x000024d8                heizung_set_pwm_by_temp
+                0x0000252c                heizung_init
+                0x000025a2                heizung_handle_pwm
+                0x000025e4                heizung_get_matching_zeitzone_index
+                0x00002610                heizung_timer_handler
+                0x00002856                heizung_get_matching_zeitzone_id
+                0x00002894                heizung_can_callback
+ .text          0x00002c68      0x18e helligkeitssensor.o
+                0x00002c68                helligkeitssensor_timer_handler
+                0x00002dd2                helligkeitssensor_init
+ .text          0x00002df6      0x430 lichtzone.o
+                0x00002df6                lichtzone_setup_timer
+                0x00002e16                inform_action_groups
+                0x00002e98                lichtzone_timer_handler
+                0x00002ed8                lichtzone_can_callback
+ .text          0x00003226       0x94 log.o
+                0x00003226                send_log2
+                0x00003272                send_log
+ .text          0x000032ba      0x1bc main.o
+                0x000032ba                main
+                0x00003300                hauselektrik_callback
+ .text          0x00003476      0x17e multitaster.o
+                0x00003476                multitaster_init
+                0x000034a6                multitaster_can_callback
+                0x000034f0                multitaster_timer_handler
+ .text          0x000035f4      0x308 onewire.o
+                0x000035f4                ow_setpin
+                0x000035fe                ow_getpin
+                0x00003608                ow_bit_io
+                0x0000369e                ow_write_byte
+                0x000036c0                ow_read_byte
+                0x000036c8                ow_reset
+                0x0000375a                ow_command
+                0x00003798                ow_rom_search
+                0x00003828                ow_discover
+ .text          0x000038fc      0x186 poti.o
+                0x000038fc                getADCvalue
+                0x000039cc                poti_timer_handler
+                0x00003a5c                poti_init
+ .text          0x00003a82      0x102 powerportAutomat.o
+                0x00003a82                powerportAutomat_init
+                0x00003b08                powerportAutomat_can_callback
+ .text          0x00003b84      0x336 powerport.o
+                0x00003b84                powerport_setup_timer
+                0x00003ba4                powerport_init
+                0x00003bac                powerport_is_in_group
+                0x00003bde                powerport_get
+                0x00003bf2                powerport_send_state_info
+                0x00003c46                powerport_set
+                0x00003c50                relais_off
+                0x00003c6c                relais_on
+                0x00003cac                powerport_timer_handler
+                0x00003d2c                set_powerport_or_timer
+                0x00003d88                powerport_toggle
+                0x00003dac                powerport_can_callback
+ .text          0x00003eba      0x184 reedkontakt.o
+                0x00003eba                reedkontakt_init
+                0x00003edc                reedkontakt_can_callback
+                0x00003f42                reedkontakt_timer_handler
+ .text          0x0000403e      0x150 rolladenAutomat.o
+                0x0000403e                rolladenAutomat_init
+                0x00004050                rolladenAutomat_can_callback
+                0x00004124                rolladenAutomat_timer_handler
+ .text          0x0000418e      0x79c rolladen.o
+                0x0000418e                rolladen_init
+                0x000041ce                rolladen_laufzeit_align
+                0x0000420a                rolladen_is_in_group
+                0x00004240                rolladen_min_laufzeit
+                0x0000426a                rolladen_max_laufzeit
+                0x000042a0                rolladen_set_soll_laufzeit
+                0x000042ee                rolladen_lowlevel_get_state
+                0x000042f4                rolladen_lowlevel_get_position
+                0x0000434e                rolladen_lowlevel_define_position
+                0x000043b0                rolladen_can_callback
+                0x0000456a                rolladen_send_changed_info
+                0x000045c2                rolladen_lowlevel_timer_handler
+                0x00004924                rolladen_timer_handler
+ .text          0x0000492a      0x1c6 rolladenSchlitzpos.o
+                0x0000492a                rolladenSchlitzpos_init
+                0x00004934                rolladenSchlitzpos_timer_handler
+                0x000049e0                send_rolladen_position_set
+                0x00004a2a                rolladenSchlitzpos_can_callback
+ .text          0x00004af0       0xda schalter.o
+                0x00004b64                schalter_timer_handler
+                0x00004ba6                schalter_init
+ .text          0x00004bca      0x17c shiftio.o
+                0x00004bca                initShiftInOut
+                0x00004bdc                doClkInput
+                0x00004be2                storeFromParallelInputs
+                0x00004be8                isBitFromShiftInSet
+                0x00004c06                changeShiftOutPinState
+                0x00004c6a                getShiftOutPinState
+                0x00004cac                activateNewOutput
+                0x00004cc2                doClkOutput
+                0x00004cd8                shiftOutByte
+                0x00004d04                shiftOutDataArray
+                0x00004d3c                shiftOut_timer_handler
+ .text          0x00004d46       0x68 tastdimmer.o
+                0x00004d46                tastdimmer_is_in_group
+                0x00004d6a                tastdimmer_can_callback
+ .text          0x00004dae       0xd6 taster.o
+                0x00004dae                taster_timer_handler
+ .text          0x00004e84       0x6c tasterinput.o
+                0x00004e84                tasterport_read
+ .text          0x00004ef0      0x214 tempsensor.o
+                0x00004ef0                tempsensor_str2id
+                0x00004f5c                tempsensor_can_callback
+                0x00004fca                tempsensor_timer_handler
+                0x000050ec                tempsensor_init
+ .text          0x00005104      0x1d6 timer.o
+                0x00005104                timer_handler
+                0x0000514c                idle_handler
+ .text          0x000052da      0x104 timeservice.o
+                0x000052da                timeservice_can_callback
+                0x0000531e                timeservice_timer_handler
+ .text          0x000053de      0x150 zeitschaltuhr.o
+                0x000053de                zeitschaltuhr_init
+                0x000053f6                zeitschaltuhr_can_callback
+                0x00005470                zeitschaltuhr_timer_handler
+ .text          0x0000552e      0x18c zeitzone.o
+                0x0000552e                zeitzone_init
+                0x00005536                zeitzone_matches
+                0x0000557c                zeitzone_can_callback
+ .text          0x000056ba      0x192 zentralheizungspumpe.o
+                0x000056ba                zentralheizungspumpe_init
+                0x0000573e                zentralheizungspumpe_can_callback
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_mulsi3.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodqi4.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodhi4.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodhi4.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodsi4.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodsi4.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_tablejump.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_copy_data.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strcat.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vsnprintf_p.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_word_atmega644.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen_P.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(fputc.o)
+ .text          0x0000584c        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+                0x0000584c                . = ALIGN (0x2)
+ *(.text.*)
+ .text.libgcc   0x0000584c       0x3e /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_mulsi3.o)
+                0x0000584c                __mulsi3
+ .text.libgcc   0x0000588a       0x18 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodqi4.o)
+                0x0000588a                __udivmodqi4
+ .text.libgcc   0x000058a2       0x28 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodhi4.o)
+                0x000058a2                __udivmodhi4
+ .text.libgcc   0x000058ca       0x26 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodhi4.o)
+                0x000058ca                __divmodhi4
+                0x000058ca                _div
+ .text.libgcc   0x000058f0       0x44 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodsi4.o)
+                0x000058f0                __udivmodsi4
+ .text.libgcc   0x00005934       0x36 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodsi4.o)
+                0x00005934                __divmodsi4
+ .text.libgcc   0x0000596a       0x38 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+                0x0000596a                __prologue_saves__
+ .text.libgcc   0x000059a2       0x36 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+                0x000059a2                __epilogue_restores__
+ .text.libgcc   0x000059d8        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ .text.libgcc   0x000059d8        0xc /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_tablejump.o)
+                0x000059d8                __tablejump2__
+                0x000059dc                __tablejump__
+ .text.libgcc   0x000059e4        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc   0x000059e4        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+ .text.avr-libc
+                0x000059e4       0x16 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strcat.o)
+                0x000059e4                strcat
+ .text.avr-libc
+                0x000059fa       0x54 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vsnprintf_p.o)
+                0x000059fa                vsnprintf_P
+ .text.avr-libc
+                0x00005a4e      0x3ba /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+                0x00005a4e                vfprintf
+ .text.avr-libc
+                0x00005e08       0x20 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+                0x00005e08                __eerd_block_m644
+                0x00005e0c                __eerd_blraw_m644
+ .text.avr-libc
+                0x00005e28       0x10 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+                0x00005e28                __eerd_byte_m644
+ .text.avr-libc
+                0x00005e38       0x1c /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+                0x00005e38                __eewr_byte_m644
+                0x00005e3a                __eewr_r18_m644
+ .text.avr-libc
+                0x00005e54        0xa /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_word_atmega644.o)
+                0x00005e54                __eewr_word_m644
+ .text.avr-libc
+                0x00005e5e       0x16 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen_P.o)
+                0x00005e5e                strnlen_P
+ .text.avr-libc
+                0x00005e74       0x16 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen.o)
+                0x00005e74                strnlen
+ .text.avr-libc
+                0x00005e8a       0x58 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(fputc.o)
+                0x00005e8a                fputc
+ .text.avr-libc
+                0x00005ee2       0xbc /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+                0x00005ee2                __ultoa_invert
+                0x00005f9e                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x00005f9e        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+                0x00005f9e                exit
+                0x00005f9e                _exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x00005f9e        0x4 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ *(.fini0)
+                0x00005fa2                _etext = .
+
+.data           0x00800100        0x2 load address 0x00005fa2
+                0x00800100                PROVIDE (__data_start, .)
+ *(.data)
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ .data          0x00800100        0x0 ../../canix/canix.o
+ .data          0x00800100        0x0 ../../canix/mcp2515.o
+ .data          0x00800100        0x0 ../../canix/tools.o
+ .data          0x00800100        0x0 ../../canix/hcan_hms.o
+ .data          0x00800100        0x0 ../../canix/hcan_rts.o
+ .data          0x00800100        0x2 ../../canix/syslog.o
+ .data          0x00800102        0x0 ../../canix/eds.o
+ .data          0x00800102        0x0 ../../canix/mem_check.o
+ .data          0x00800102        0x0 darlingtonoutput.o
+ .data          0x00800102        0x0 devices.o
+ .data          0x00800102        0x0 dunstabzugport.o
+ .data          0x00800102        0x0 floatingAverage.o
+ .data          0x00800102        0x0 heizung.o
+ .data          0x00800102        0x0 helligkeitssensor.o
+ .data          0x00800102        0x0 lichtzone.o
+ .data          0x00800102        0x0 log.o
+ .data          0x00800102        0x0 main.o
+ .data          0x00800102        0x0 multitaster.o
+ .data          0x00800102        0x0 onewire.o
+ .data          0x00800102        0x0 poti.o
+ .data          0x00800102        0x0 powerportAutomat.o
+ .data          0x00800102        0x0 powerport.o
+ .data          0x00800102        0x0 reedkontakt.o
+ .data          0x00800102        0x0 rolladenAutomat.o
+ .data          0x00800102        0x0 rolladen.o
+ .data          0x00800102        0x0 rolladenSchlitzpos.o
+ .data          0x00800102        0x0 schalter.o
+ .data          0x00800102        0x0 shiftio.o
+ .data          0x00800102        0x0 tastdimmer.o
+ .data          0x00800102        0x0 taster.o
+ .data          0x00800102        0x0 tasterinput.o
+ .data          0x00800102        0x0 tempsensor.o
+ .data          0x00800102        0x0 timer.o
+ .data          0x00800102        0x0 timeservice.o
+ .data          0x00800102        0x0 zeitschaltuhr.o
+ .data          0x00800102        0x0 zeitzone.o
+ .data          0x00800102        0x0 zentralheizungspumpe.o
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_mulsi3.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodqi4.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodhi4.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodhi4.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodsi4.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodsi4.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_tablejump.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_copy_data.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strcat.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vsnprintf_p.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_word_atmega644.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen_P.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(fputc.o)
+ .data          0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+ *(.data*)
+ *(.rodata)
+ *(.rodata*)
+ *(.gnu.linkonce.d*)
+                0x00800102                . = ALIGN (0x2)
+                0x00800102                _edata = .
+                0x00800102                PROVIDE (__data_end, .)
+
+.bss            0x00800102      0x85f
+                0x00800102                PROVIDE (__bss_start, .)
+ *(.bss)
+ .bss           0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ .bss           0x00800102       0x94 ../../canix/canix.o
+                0x00800102                canix_rx_received
+                0x00800106                canix_rx_lost
+                0x0080010a                canix_tx_sent
+                0x0080010e                canix_tx_dropped
+ .bss           0x00800196        0x0 ../../canix/mcp2515.o
+ .bss           0x00800196        0x0 ../../canix/tools.o
+ .bss           0x00800196        0x0 ../../canix/hcan_hms.o
+ .bss           0x00800196        0x0 ../../canix/hcan_rts.o
+ .bss           0x00800196        0x1 ../../canix/syslog.o
+                0x00800196                canix_debug_level
+ .bss           0x00800197        0x0 ../../canix/eds.o
+ .bss           0x00800197        0x0 ../../canix/mem_check.o
+ .bss           0x00800197        0x0 darlingtonoutput.o
+ .bss           0x00800197        0x0 devices.o
+ .bss           0x00800197        0x0 dunstabzugport.o
+ .bss           0x00800197        0x0 floatingAverage.o
+ .bss           0x00800197        0x0 heizung.o
+ .bss           0x00800197        0x0 helligkeitssensor.o
+ .bss           0x00800197        0x0 lichtzone.o
+ .bss           0x00800197        0x0 log.o
+ .bss           0x00800197        0x0 main.o
+ .bss           0x00800197        0x0 multitaster.o
+ .bss           0x00800197        0x1 onewire.o
+                0x00800197                ow_pin
+ .bss           0x00800198        0x0 poti.o
+ .bss           0x00800198        0x0 powerportAutomat.o
+ .bss           0x00800198        0x0 powerport.o
+ .bss           0x00800198        0x0 reedkontakt.o
+ .bss           0x00800198        0x0 rolladenAutomat.o
+ .bss           0x00800198        0x0 rolladen.o
+ .bss           0x00800198        0x0 rolladenSchlitzpos.o
+ .bss           0x00800198        0x0 schalter.o
+ .bss           0x00800198        0x4 shiftio.o
+ .bss           0x0080019c        0x0 tastdimmer.o
+ .bss           0x0080019c        0x0 taster.o
+ .bss           0x0080019c        0x0 tasterinput.o
+ .bss           0x0080019c        0x0 tempsensor.o
+ .bss           0x0080019c        0x6 timer.o
+                0x0080019c                timer_counter_100th
+                0x0080019d                timer_counter_10th
+                0x0080019e                timer_counter_1
+                0x0080019f                timer_event_100th
+                0x008001a0                timer_event_10th
+                0x008001a1                timer_event_1
+ .bss           0x008001a2        0x0 timeservice.o
+ .bss           0x008001a2        0x0 zeitschaltuhr.o
+ .bss           0x008001a2        0x0 zeitzone.o
+ .bss           0x008001a2        0x0 zentralheizungspumpe.o
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_mulsi3.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodqi4.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodhi4.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodhi4.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_udivmodsi4.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_divmodsi4.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_tablejump.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_copy_data.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strcat.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vsnprintf_p.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_word_atmega644.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen_P.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(fputc.o)
+ .bss           0x008001a2        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+ *(.bss*)
+ *(COMMON)
+ COMMON         0x008001a2       0xbd ../../canix/canix.o
+                0x008001a2                canix_sleep_ticker
+                0x008001a6                canix_rtc_clock
+                0x008001b3                canix_rx_queue
+                0x0080025b                canix_loop_throughput_counter
+                0x0080025d                canix_loop_throughput
+ COMMON         0x0080025f      0x702 devices.o
+                0x0080025f                device_data_ram_usage
+                0x00800261                device_data
+                0x00800861                pdevice_data
+                0x00800961                PROVIDE (__bss_end, .)
+                0x00005fa2                __data_load_start = LOADADDR (.data)
+                0x00005fa4                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x00800961        0x0
+                0x00800961                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+                0x00800961                PROVIDE (__noinit_end, .)
+                0x00800961                _end = .
+                0x00800961                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000        0x0
+ *(.eeprom*)
+                0x00810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab           0x00000000     0x1f08
+ *(.stab)
+ .stab          0x00000000      0x6b4 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ .stab          0x000006b4       0x9c /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strcat.o)
+                                 0xa8 (size before relaxing)
+ .stab          0x00000750      0x3e4 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vsnprintf_p.o)
+                                0x3f0 (size before relaxing)
+ .stab          0x00000b34      0x978 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(vfprintf_std.o)
+                                0xb58 (size before relaxing)
+ .stab          0x000014ac      0x108 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+                                0x114 (size before relaxing)
+ .stab          0x000015b4       0x90 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+                                 0x9c (size before relaxing)
+ .stab          0x00001644       0xe4 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+                                 0xf0 (size before relaxing)
+ .stab          0x00001728       0x54 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_word_atmega644.o)
+                                 0x60 (size before relaxing)
+ .stab          0x0000177c       0x9c /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen_P.o)
+                                 0xa8 (size before relaxing)
+ .stab          0x00001818       0x9c /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(strnlen.o)
+                                 0xa8 (size before relaxing)
+ .stab          0x000018b4      0x1d4 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(fputc.o)
+                                0x3b4 (size before relaxing)
+ .stab          0x00001a88      0x480 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(ultoa_invert.o)
+                                0x48c (size before relaxing)
+
+.stabstr        0x00000000      0xd95
+ *(.stabstr)
+ .stabstr       0x00000000      0xd95 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info)
+ *(.gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+OUTPUT(main.out elf32-avr)
+LOAD linker stubs

@@ -1,0 +1,504 @@
+Archive member included because of file (symbol)
+
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+                              main.o (__prologue_saves__)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+                              main.o (__epilogue_restores__)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+                              /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o (exit)
+/usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+                              main.o (__do_clear_bss)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+                              main.o (__eerd_byte_m644)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_word_atmega644.o)
+                              main.o (__eerd_word_m644)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+                              main.o (__eewr_byte_m644)
+/usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+                              /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_word_atmega644.o) (__eerd_blraw_m644)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00020000         xr
+data             0x00800060         0x0000ffa0         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+Address of section .data set to 0x800100
+LOAD /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+Address of section .text set to 0xf000
+LOAD main.o
+LOAD /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a
+LOAD /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a
+LOAD /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x0000f000      0x9aa
+ *(.vectors)
+ .vectors       0x0000f000       0x70 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+                0x0000f000                __vectors
+                0x0000f000                __vector_default
+ *(.vectors)
+ *(.progmem.gcc*)
+ *(.progmem*)
+                0x0000f070                . = ALIGN (0x2)
+                0x0000f070                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x0000f070        0x0 linker stubs
+ *(.trampolines*)
+                0x0000f070                __trampolines_end = .
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x0000f070                __ctors_start = .
+ *(.ctors)
+                0x0000f070                __ctors_end = .
+                0x0000f070                __dtors_start = .
+ *(.dtors)
+                0x0000f070                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x0000f070        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+                0x0000f070                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x0000f070        0xc /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ .init4         0x0000f07c       0x10 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+                0x0000f07c                __do_clear_bss
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x0000f08c        0x8 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ *(.init9)
+ *(.text)
+ .text          0x0000f094        0x4 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+                0x0000f094                __vector_22
+                0x0000f094                __vector_1
+                0x0000f094                __vector_24
+                0x0000f094                __vector_12
+                0x0000f094                __bad_interrupt
+                0x0000f094                __vector_6
+                0x0000f094                __vector_3
+                0x0000f094                __vector_23
+                0x0000f094                __vector_25
+                0x0000f094                __vector_11
+                0x0000f094                __vector_13
+                0x0000f094                __vector_17
+                0x0000f094                __vector_19
+                0x0000f094                __vector_7
+                0x0000f094                __vector_27
+                0x0000f094                __vector_5
+                0x0000f094                __vector_4
+                0x0000f094                __vector_9
+                0x0000f094                __vector_2
+                0x0000f094                __vector_21
+                0x0000f094                __vector_15
+                0x0000f094                __vector_8
+                0x0000f094                __vector_26
+                0x0000f094                __vector_14
+                0x0000f094                __vector_10
+                0x0000f094                __vector_16
+                0x0000f094                __vector_18
+                0x0000f094                __vector_20
+ .text          0x0000f098      0x848 main.o
+                0x0000f098                delay
+                0x0000f0ae                spi_init
+                0x0000f0bc                spi_putc
+                0x0000f0c8                spi_getc
+                0x0000f0d4                can_enable_mcp2515
+                0x0000f0d8                can_disable_mcp2515
+                0x0000f0dc                mcp2515_bit_modify
+                0x0000f10e                mcp2515_read_register
+                0x0000f136                mcp2515_write_register
+                0x0000f15e                mcp2515_set_mode
+                0x0000f180                mcp2515_write_register_p
+                0x0000f1b8                mcp2515_read_register_p
+                0x0000f1f0                can_open_interface
+                0x0000f256                can_send_message
+                0x0000f2e2                can_message_available
+                0x0000f2ec                can_read_message
+                0x0000f3de                calculate_crc16_over_flash
+                0x0000f464                check_firmware
+                0x0000f49c                main
+ .text          0x0000f8e0        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+ .text          0x0000f8e0        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+ .text          0x0000f8e0        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ .text          0x0000f8e0        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+ .text          0x0000f8e0        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+ .text          0x0000f8e0        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_word_atmega644.o)
+ .text          0x0000f8e0        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+ .text          0x0000f8e0        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+                0x0000f8e0                . = ALIGN (0x2)
+ *(.text.*)
+ .text.libgcc   0x0000f8e0       0x38 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+                0x0000f8e0                __prologue_saves__
+ .text.libgcc   0x0000f918       0x36 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+                0x0000f918                __epilogue_restores__
+ .text.libgcc   0x0000f94e        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ .text.libgcc   0x0000f94e        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+ .text.avr-libc
+                0x0000f94e       0x10 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+                0x0000f94e                __eerd_byte_m644
+ .text.avr-libc
+                0x0000f95e        0xc /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_word_atmega644.o)
+                0x0000f95e                __eerd_word_m644
+ .text.avr-libc
+                0x0000f96a       0x1c /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+                0x0000f96a                __eewr_byte_m644
+                0x0000f96c                __eewr_r18_m644
+ .text.avr-libc
+                0x0000f986       0x20 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+                0x0000f986                __eerd_block_m644
+                0x0000f98a                __eerd_blraw_m644
+                0x0000f9a6                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x0000f9a6        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+                0x0000f9a6                exit
+                0x0000f9a6                _exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x0000f9a6        0x4 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ *(.fini0)
+                0x0000f9aa                _etext = .
+
+.data           0x00800100        0x0 load address 0x0000f9aa
+                0x00800100                PROVIDE (__data_start, .)
+ *(.data)
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ .data          0x00800100        0x0 main.o
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_word_atmega644.o)
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+ .data          0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+ *(.data*)
+ *(.rodata)
+ *(.rodata*)
+ *(.gnu.linkonce.d*)
+                0x00800100                . = ALIGN (0x2)
+                0x00800100                _edata = .
+                0x00800100                PROVIDE (__data_end, .)
+
+.bss            0x00800100        0x2
+                0x00800100                PROVIDE (__bss_start, .)
+ *(.bss)
+ .bss           0x00800100        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ .bss           0x00800100        0x2 main.o
+                0x00800100                jump_to_app
+ .bss           0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+ .bss           0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+ .bss           0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+ .bss           0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+ .bss           0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+ .bss           0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_word_atmega644.o)
+ .bss           0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+ .bss           0x00800102        0x0 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+ *(.bss*)
+ *(COMMON)
+                0x00800102                PROVIDE (__bss_end, .)
+                0x0000f9aa                __data_load_start = LOADADDR (.data)
+                0x0000f9aa                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x00800102        0x0
+                0x00800102                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+                0x00800102                PROVIDE (__noinit_end, .)
+                0x00800102                _end = .
+                0x00800102                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000        0x0
+ *(.eeprom*)
+                0x00810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab           0x00000000      0x99c
+ *(.stab)
+ .stab          0x00000000      0x6b4 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+ .stab          0x000006b4       0x90 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+                                 0x9c (size before relaxing)
+ .stab          0x00000744       0x6c /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_word_atmega644.o)
+                                 0x78 (size before relaxing)
+ .stab          0x000007b0       0xe4 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+                                 0xf0 (size before relaxing)
+ .stab          0x00000894      0x108 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+                                0x114 (size before relaxing)
+
+.stabstr        0x00000000      0x111
+ *(.stabstr)
+ .stabstr       0x00000000      0x111 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info)
+ *(.gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+OUTPUT(main.out elf32-avr)
+LOAD linker stubs
+
+Cross Reference Table
+
+Symbol                                            File
+__bad_interrupt                                   /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__bss_end                                         /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+__bss_start                                       /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+__do_clear_bss                                    /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_clear_bss.o)
+                                                  main.o
+__eerd_block_m644                                 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+__eerd_blraw_m644                                 /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_block_atmega644.o)
+                                                  /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_word_atmega644.o)
+__eerd_byte_m644                                  /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_byte_atmega644.o)
+                                                  main.o
+__eerd_word_m644                                  /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eerd_word_atmega644.o)
+                                                  main.o
+__eewr_byte_m644                                  /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+                                                  main.o
+__eewr_r18_m644                                   /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/libc.a(eewr_byte_atmega644.o)
+__epilogue_restores__                             /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_epilogue.o)
+                                                  main.o
+__heap_end                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__init                                            /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__prologue_saves__                                /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_prologue.o)
+                                                  main.o
+__stack                                           /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_1                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_10                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_11                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_12                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_13                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_14                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_15                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_16                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_17                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_18                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_19                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_2                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_20                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_21                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_22                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_23                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_24                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_25                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_26                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_27                                       /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_3                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_4                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_5                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_6                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_7                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_8                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_9                                        /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vector_default                                  /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+__vectors                                         /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+_exit                                             /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+calculate_crc16_over_flash                        main.o
+can_disable_mcp2515                               main.o
+can_enable_mcp2515                                main.o
+can_message_available                             main.o
+can_open_interface                                main.o
+can_read_message                                  main.o
+can_send_message                                  main.o
+check_firmware                                    main.o
+delay                                             main.o
+exit                                              /usr/lib/gcc/avr/4.3.5/avr5/libgcc.a(_exit.o)
+                                                  /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+jump_to_app                                       main.o
+main                                              main.o
+                                                  /usr/lib/gcc/avr/4.3.5/../../../avr/lib/avr5/crtm644.o
+mcp2515_bit_modify                                main.o
+mcp2515_read_register                             main.o
+mcp2515_read_register_p                           main.o
+mcp2515_set_mode                                  main.o
+mcp2515_write_register                            main.o
+mcp2515_write_register_p                          main.o
+spi_getc                                          main.o
+spi_init                                          main.o
+spi_putc                                          main.o

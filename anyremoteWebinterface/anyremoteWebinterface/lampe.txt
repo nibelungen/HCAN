@@ -1,0 +1,25 @@
+[34;1m> lampe
+[30;0mGruppe:  Status:   Name:
+ 137      -       EG_Windfang
+  91      -       EG_Bad-Decke
+ 115      -       EG_Speisekammer
+ 101      -       EG_Esszimmer-Wand
+ 134      -       EG_Wohnzimmer-Wand
+ 141      -       EG_Wohnzimmer-Decke
+  64      -       EG_Arbeitszimmer-Wand-Sued
+ 103      -       EG_Arbeitszimmer-Wand-Nord
+ 100      -       EG_Esszimmer-Decke
+ 104      -       EG_Kueche-Mitteltresen
+   1     ein      OG_K1-Decke-Schraege
+   2      -       OG_K1-Decke-Tuer
+  11      -       OG_K2-Decke-vorn
+  12      -       OG_K2-Decke-Balkon
+  21      -       OG_Schlafzimmer-Wand
+  36      -       OG_Schlafzimmer-Decke
+  30      -       OG_Bad-Decke
+  31      -       OG_Bad-Badewanne
+  33      -       OG_Bad-Wand
+  14      -       OG_Balkon
+  37      -       DG1
+  40      -       DG2
+[34;1m> [30;0m

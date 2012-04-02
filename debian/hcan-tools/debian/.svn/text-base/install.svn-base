@@ -1,0 +1,8 @@
+telican /usr/bin
+hcanaddressd /usr/sbin
+hcand /usr/sbin
+hcanhid /usr/sbin
+hcan-discover /usr/bin
+hcan-backup-config /usr/bin
+hcan-restore-config /usr/bin
+

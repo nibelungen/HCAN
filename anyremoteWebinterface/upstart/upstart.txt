@@ -1,0 +1,135 @@
+initctl list //all jobs and their states
+initctl stop hcanhid
+---
+http://upstart.ubuntu.com/getting-started.html
+http://geeknme.wordpress.com/2009/10/15/getting-started-with-upstart-in-ubuntu/
+--- 
+Snap Shots Options [Make this Shot larger] [Close]
+Options
+Disable
+Get Free Shots
+  
+ 
+Close
+Snap Shares for charity
+Geek ‘N Me
+Jim Kass’s Geekery, Randomness and Things Useful… or Not
+
+    * Home
+    * About
+
+ 
+Getting Started with Upstart in Ubuntu
+What’s Upstart
+
+Ubuntu has had upstart installed as a replacement for init scripts since as far back as 2006, but it hasn’t yet been really used until the latest beta release of Karmic (Ubuntu 9.10).  Upstart is a more robust services management daemon that allows for things like dependencies, custom events/triggers, pre/post initialiation and resource limitations, amongst other things. You can go check out their home page at http://upstart.ubuntu.com.
+
+I recently upgraded some servers to Karmic, and I decided to write a simple upstart script to start/stop my Django development server when I wanted.
+
+The great thing about upstart is that it actually handles user configurable events, which is a super-powerful feature that I’m not really using yet, but it allows you to create chained initialization and shutdown processes.  Another great feature is the ability to run pre/post initialization tasks.  I’m using this in my example below to ensure the database is sync’d before starting up.
+
+For my django server, I really just needed the bare minimum though of upstart’s features, and from my research into it so far, it looks like upstart is regularly changing, so putting too many directives in my config file might only cause problems later. Karmic is still not yet out of beta, as it is.
+
+So, consider this a super-brief tutorial on how to use upstart for your own tasks, as a replacement for init scripts, or in addition to them (upstart doesn’t interfere with init scripts).
+Installing/Using Upstart
+
+Incidentally, if you haven’t got upstart on your system (you’ll know if the command initctl is missing). then you can install it using apt-get or yum depending on what system you are using. Upstart is supposedly defaulted in Fedora as well, but I’ve been Ubuntu-ized for a few years now so I haven’t played with my old friend Red Hat in a while.
+
+Once you have upstart installed, one change you’ll notice right away is that upstart uses .conf files in the /etc/init directory as scripts instead of the ones in /etc/init.d.
+
+You run these scripts by using the “start/stop/status” commands which are shortcuts to “initctl start“, “initctl stop” and “initctl status” accordingly. You can even list all services with “initctl list“, which gives you something more like a Windows Services list with statuses and PIDs.
+
+In my example, I’ll be starting my django server with the command:
+
+$ start django
+
+and stopping it with:
+
+$ stop django
+
+The directives in your .conf files are called “stanzas”, and each type of stanza tells upstart what to do. If upstart doesn’t understand a stanza, it will behave as if the service doesn’t exist.
+
+Pretty easy. So let’s take a look at the file.
+Sample Upstart Script
+
+
+# my upstart django script
+# this script will start/stop my django development server
+# optional stuff
+description "start and stop the django development server"
+version "1.0"
+author "Jim Kass"
+
+
+# configuration variables.
+# You'll want to change thse as needed
+env DJANGO_HOME=/home/django/myproject
+env DJANGO_PORT=8000
+env DJANGO_HOST=0.0.0.0 # bind to all interfaces
+
+# tell upstart we're creating a daemon
+# upstart manages PID creation for you.
+expect fork
+
+pre-start script
+chdir $DJANGO_HOME
+exec /usr/bin/python manage.py syncdb
+emit django_starting
+end script
+
+script
+# My startup script, plain old shell scripting here.
+chdir $DJANGO_HOME
+exec /usr/bin/python manage.py runserver $DJANGO_HOST:$DJANGO_PORT &
+# create a custom event in case we want to chain later
+emit django_running
+end script
+
+That’s it! You can actually use the shortcut stanza “exec” on a single line. chdir is actually also a stanza, but at this time it doesn’t support variable expansion, so I’ve instead used the script stanza. If you wanted to hard-code all your values and not use variables, your script could be even shorter.
+
+See the wiki/docs here. These docs are for an older version of upstart, and there doesn’t appear to be an updated list, so I had to learn a few things from trial/error. For instance, console logged is not a valid stanza, but console output still is. Your mileage may of course vary.
+
+For reference, the Upstart Stanza Wiki Page has a description of all the stanzas I used, and a lot more.
+
+Upstart can do a LOT more than just start/stop things, you can chain scripts using custom events – you can even fire events manually from initctl (useful for testing things).
+
+As mentioned, if you have directives in your script that upstart doesn’t understand, it will tell you “unknown job:” when you try to run it. As upstart is pretty new and changing frequently, not all “stanza” directives work on all versions. Check docs for your version as needed.
+
+Hope that helps!
+
+Possibly related posts: (automatically generated)
+
+    * Adding a service to chkconfig — Linux
+
+This entry was posted on Thursday, October 15th, 2009 at 4:29 pm and is filed under Geekery, Systems Administration, Useful or Not. You can follow any responses to this entry through the RSS 2.0 feed. You can leave a response, or trackback from your own site.
+Leave a Reply
+Click here to cancel reply.
+
+Name (required)
+
+E-mail (will not be published) (required)
+
+Website
+
+Notify me of follow-up comments via email.
+
+Notify me of new posts via email.
+
+    *
+      Archives
+          o October 2009
+          o September 2009
+          o July 2009
+          o June 2009
+          o May 2009
+          o April 2009
+    *
+      Categories
+          o Geekery
+          o Randomness
+          o Systems Administration
+          o Useful or Not
+
+Theme Contempt by Vault9.
+Blog at WordPress.com.
+

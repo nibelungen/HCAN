@@ -1,0 +1,33 @@
+unter 
+ls /sys/bus/usb/devices
+
+per USB-Gerät stecken und raus ziehen welches es ist:
+2-2.2
+
+ausschalten: 
+bash: echo: Schreibfehler: Das Argument ist ungültig.
+ echo suspend | sudo tee /sys/bus/usb/devices/2-2.2/power/control
+ echo suspend >/sys/bus/usb/devices/2-2.2/power/control
+ echo suspend | sudo tee /sys/bus/usb/devices/2-2.2/power/control
+
+einschalten:
+echo auto >/sys/bus/usb/devices/2-2.2/power/control
+
+---
+muss das USB-Gerät über einen Switch angeschaltet sein?
+---
+
+# disable external wake-up; do this only once
+echo disabled > /sys/bus/usb/devices/2-2.2/power/wakeup
+
+echo on > /sys/bus/usb/devices/2-2.2/power/level       # turn on
+echo suspend > /sys/bus/usb/devices/2-2.2/power/level  # turn off
+
+---
+
+geht:
+root@ingo-desk:/# echo 2-2.2 > /sys/bus/usb/drivers/usb/bind
+root@ingo-desk:/# echo 2-2.2 > /sys/bus/usb/drivers/usb/unbind
+
+echo 4-2 > /sys/bus/usb/drivers/usb/bind
+echo 4-2 > /sys/bus/usb/drivers/usb/unbind

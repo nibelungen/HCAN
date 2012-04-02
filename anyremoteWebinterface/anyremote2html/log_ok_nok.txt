@@ -1,0 +1,193 @@
+
+
+Fri May 27 20:35:45 2011 CMD: >DONE<
+Fri May 27 20:35:45 2011 CMD: >FINALIZE<
+Fri May 27 20:35:45 2011 renderHtml finished
+Fri May 27 20:35:48 2011 ===================== do_GET ===================== 0
+Fri May 27 20:35:48 2011 Got /
+Converted /
+Got root request
+needUpload= -1
+Fri May 27 20:35:48 2011 Got HTML (takes 0.1 seconds)
+Fri May 27 20:35:48 2011 write responce
+localhost.localdomain - - [27/May/2011 20:35:48] "GET / HTTP/1.1" 200 -
+Fri May 27 20:35:48 2011 ++++++++++++++++++++++++++++++++++++++++++++++++++
+Fri May 27 20:35:52 2011 ===================== do_GET ===================== 0
+Fri May 27 20:35:52 2011 Got /?list=7&op=ein
+Converted /?list=7&op=ein
+ooo IL: list in pressed link ooo
+Msg:ein(8,0.0 OG_K2)
+dispatchToReader Msg:ein(8,0.0 OG_K2)
+IL dispatchToReader Msg:ein(8,0.0 OG_K2)
+needUpload= 0
+Fri May 27 20:35:52 2011 Continue sleep  0.1
+Fri May 27 20:35:52 2011 Send to anyRemote Msg:ein(8,0.0 OG_K2)
+
+Fri May 27 20:35:52 2011 Continue sleep  0.2
+Fri May 27 20:35:52 2011 Got from anyRemote proceed =>  Set(list,fg,0,0,0);Set(list,bg,255,255,255);Set(list,font,large);Set(list,replace,Heizungen (Tsoll),--- Alle,0.0 EG_Wohn-Arbeitszimmer,18.3 EG_Flur,0.0 EG_Kueche-Esszimmer,0.0 EG_Bad,0.0 OG_Bad,0.0 OG_K1,0.0 OG_K2,0.0 OG_Schlafzimmer);
+Fri May 27 20:35:52 2011 Got from anyRemote buffered =>  
+renderHtml  0
+CMD: >Set(list,fg,0,0,0<
+Fri May 27 20:35:52 2011 CMD: >DONE<
+CMD: >Set(list,bg,255,255,255<
+Fri May 27 20:35:52 2011 CMD: >DONE<
+CMD: >Set(list,font,large<
+Fri May 27 20:35:52 2011 CMD: >DONE<
+CMD: >Set(list,replace,Heizungen (Tsoll),--- Alle,0.0 EG_Wohn-Arbeitszimmer,18.3 EG_Flur,0.0 EG_Kueche-Esszimmer,0.0 EG_Bad,0.0 OG_Bad,0.0 OG_K1,0.0 OG_K2,0.0 OG_Schlafzimmer<
+Fri May 27 20:35:52 2011 CMD: >DONE<
+CMD: ><
+Fri May 27 20:35:52 2011 CMD: >DONE<
+Fri May 27 20:35:52 2011 renderHtml finished
+Fri May 27 20:35:53 2011 Continue sleep  0.3
+Fri May 27 20:35:53 2011 Got from anyRemote proceed =>  Set(list,select,8);End();
+Fri May 27 20:35:53 2011 Got from anyRemote buffered =>  
+renderHtml  1
+CMD: >Set(list,select,8<
+IL: List-Index=8
+Fri May 27 20:35:53 2011 CMD: >DONE<
+CMD: >End(<
+CMD: ><
+Fri May 27 20:35:53 2011 CMD: >DONE<
+Fri May 27 20:35:53 2011 CMD: >FINALIZE<
+Fri May 27 20:35:53 2011 renderHtml finished
+Fri May 27 20:35:53 2011 Got HTML (takes 0.4 seconds)
+Fri May 27 20:35:53 2011 write responce
+localhost.localdomain - - [27/May/2011 20:35:53] "GET /?list=7&op=ein HTTP/1.1" 200 -
+Fri May 27 20:35:53 2011 ++++++++++++++++++++++++++++++++++++++++++++++++++
+^Cmake: *** [start_anyremote] Unterbrechung
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Connected to anyRemote
+Fri May 27 20:37:01 2011 Got from anyRemote proceed =>  Set(list,fg,0,0,0);Set(list,bg,255,255,255);Set(list,font,large);Set(list,replace,Heizungen (Tsoll),--- Alle,0.0 EG_Wohn-Arbeitszimmer,18.3 EG_Flur,0.0 EG_Kueche-Esszimmer,0.0 EG_Bad,0.0 OG_Bad,0.0 OG_K1,0.0 OG_K2,0.0 OG_Schlafzimmer);
+Fri May 27 20:37:01 2011 Got from anyRemote buffered =>  
+renderHtml  1
+CMD: >Set(list,fg,0,0,0<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(list,bg,255,255,255<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(list,font,large<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(list,replace,Heizungen (Tsoll),--- Alle,0.0 EG_Wohn-Arbeitszimmer,18.3 EG_Flur,0.0 EG_Kueche-Esszimmer,0.0 EG_Bad,0.0 OG_Bad,0.0 OG_K1,0.0 OG_K2,0.0 OG_Schlafzimmer<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: ><
+Fri May 27 20:37:01 2011 CMD: >DONE<
+Fri May 27 20:37:01 2011 renderHtml finished
+Fri May 27 20:37:01 2011 Got from anyRemote proceed =>  Set(list,fg,0,0,0);Set(list,bg,255,255,255);Set(list,font,large);Set(list,replace,Heizungen (Tsoll),--- Alle,0.0 EG_Wohn-Arbeitszimmer,18.3 EG_Flur,0.0 EG_Kueche-Esszimmer,0.0 EG_Bad,0.0 OG_Bad,0.0 OG_K1,0.0 OG_K2,0.0 OG_Schlafzimmer);Set(list,select,1);
+Fri May 27 20:37:01 2011 Got from anyRemote buffered =>  
+renderHtml  1
+CMD: >Set(list,fg,0,0,0<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(list,bg,255,255,255<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(list,font,large<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(list,replace,Heizungen (Tsoll),--- Alle,0.0 EG_Wohn-Arbeitszimmer,18.3 EG_Flur,0.0 EG_Kueche-Esszimmer,0.0 EG_Bad,0.0 OG_Bad,0.0 OG_K1,0.0 OG_K2,0.0 OG_Schlafzimmer<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(list,select,1<
+IL: List-Index=1
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: ><
+Fri May 27 20:37:01 2011 CMD: >DONE<
+Fri May 27 20:37:01 2011 renderHtml finished
+Fri May 27 20:37:01 2011 Got from anyRemote proceed =>  Set(list,select,1);Set(menu,clear);Set(menu,add,ein,aus,auto,plus2K,-2K,2.Licht...,3.Sonstige...,4.Rolladen...,5.Fenster...,6.Temperatur...,7.Home...);End();
+Fri May 27 20:37:01 2011 Got from anyRemote buffered =>  
+renderHtml  1
+CMD: >Set(list,select,1<
+IL: List-Index=1
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(menu,clear<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(menu,add,ein,aus,auto,plus2K,-2K,2.Licht...,3.Sonstige...,4.Rolladen...,5.Fenster...,6.Temperatur...,7.Home...<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >End(<
+CMD: ><
+Fri May 27 20:37:01 2011 CMD: >DONE<
+Fri May 27 20:37:01 2011 CMD: >FINALIZE<
+Fri May 27 20:37:01 2011 renderHtml finished
+Fri May 27 20:37:01 2011 Got from anyRemote proceed =>  Set(menu,clear);Set(menu,add,ein,aus,auto,plus2K,-2K,2.Licht...,3.Sonstige...,4.Rolladen...,5.Fenster...,6.Temperatur...,7.Home...);End();
+Fri May 27 20:37:01 2011 Got from anyRemote buffered =>  
+renderHtml  1
+CMD: >Set(menu,clear<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >Set(menu,add,ein,aus,auto,plus2K,-2K,2.Licht...,3.Sonstige...,4.Rolladen...,5.Fenster...,6.Temperatur...,7.Home...<
+Fri May 27 20:37:01 2011 CMD: >DONE<
+CMD: >End(<
+CMD: ><
+Fri May 27 20:37:01 2011 CMD: >DONE<
+Fri May 27 20:37:01 2011 CMD: >FINALIZE<
+Fri May 27 20:37:01 2011 renderHtml finished
+Fri May 27 20:37:02 2011 ===================== do_GET ===================== 0
+Fri May 27 20:37:02 2011 Got /
+Converted /
+Got root request
+needUpload= -1
+Fri May 27 20:37:02 2011 Got HTML (takes 0.1 seconds)
+Fri May 27 20:37:02 2011 write responce
+localhost.localdomain - - [27/May/2011 20:37:02] "GET / HTTP/1.1" 200 -
+Fri May 27 20:37:02 2011 ++++++++++++++++++++++++++++++++++++++++++++++++++
+Fri May 27 20:37:07 2011 ===================== do_GET ===================== 0
+Fri May 27 20:37:07 2011 Got /?list=0&op=ein
+Converted /?list=0&op=ein
+ooo IL: list in pressed link ooo
+Msg:ein(1,--- Alle)
+dispatchToReader Msg:ein(1,--- Alle)
+IL dispatchToReader Msg:ein(1,--- Alle)
+needUpload= 0
+Fri May 27 20:37:07 2011 Continue sleep  0.1
+Fri May 27 20:37:07 2011 Send to anyRemote Msg:ein(1,--- Alle)
+
+Fri May 27 20:37:07 2011 Continue sleep  0.2
+Fri May 27 20:37:08 2011 Got from anyRemote proceed =>  Set(list,fg,0,0,0);Set(list,bg,255,255,255);Set(list,font,large);
+Fri May 27 20:37:08 2011 Got from anyRemote buffered =>  
+renderHtml  0
+CMD: >Set(list,fg,0,0,0<
+Fri May 27 20:37:08 2011 CMD: >DONE<
+CMD: >Set(list,bg,255,255,255<
+Fri May 27 20:37:08 2011 CMD: >DONE<
+CMD: >Set(list,font,large<
+Fri May 27 20:37:08 2011 CMD: >DONE<
+CMD: ><
+Fri May 27 20:37:08 2011 CMD: >DONE<
+Fri May 27 20:37:08 2011 renderHtml finished
+Fri May 27 20:37:08 2011 Continue sleep  0.3
+Fri May 27 20:37:08 2011 Got from anyRemote proceed =>  Set(list,replace,Heizungen (Tsoll),--- Alle,0.0 EG_Wohn-Arbeitszimmer,18.3 EG_Flur,0.0 EG_Kueche-Esszimmer,0.0 EG_Bad,0.0 OG_Bad,0.0 OG_K1,0.0 OG_K2,0.0 OG_Schlafzimmer);Set(list,select,1);End();
+Fri May 27 20:37:08 2011 Got from anyRemote buffered =>  
+renderHtml  1
+CMD: >Set(list,replace,Heizungen (Tsoll),--- Alle,0.0 EG_Wohn-Arbeitszimmer,18.3 EG_Flur,0.0 EG_Kueche-Esszimmer,0.0 EG_Bad,0.0 OG_Bad,0.0 OG_K1,0.0 OG_K2,0.0 OG_Schlafzimmer<
+Fri May 27 20:37:08 2011 CMD: >DONE<
+CMD: >Set(list,select,1<
+IL: List-Index=1
+Fri May 27 20:37:08 2011 CMD: >DONE<
+CMD: >End(<
+CMD: ><
+Fri May 27 20:37:08 2011 CMD: >DONE<
+Fri May 27 20:37:08 2011 CMD: >FINALIZE<
+Fri May 27 20:37:08 2011 renderHtml finished
+Fri May 27 20:37:08 2011 Got HTML (takes 0.4 seconds)
+Fri May 27 20:37:08 2011 write responce
+localhost.localdomain - - [27/May/2011 20:37:08] "GET /?list=0&op=ein HTTP/1.1" 200 -
+Fri May 27 20:37:08 2011 ++++++++++++++++++++++++++++++++++++++++++++++++++
+^C^Cmake: *** [start_anyremote] Unterbrechung
+
+ingo@ingo-desk:~/Dropbox/HCAN/hcan-2.0-anyremoteWebinterface/anyremoteWebinterface/anyremoteWebinterface$ 

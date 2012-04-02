@@ -1,0 +1,489 @@
+1				Power Management for USB
+2	
+3			 Alan Stern <stern@rowland.harvard.edu>
+4	
+5				    October 28, 2010
+6	
+7	
+8	
+9		What is Power Management?
+10		-------------------------
+11	
+12	Power Management (PM) is the practice of saving energy by suspending
+13	parts of a computer system when they aren't being used.  While a
+14	component is "suspended" it is in a nonfunctional low-power state; it
+15	might even be turned off completely.  A suspended component can be
+16	"resumed" (returned to a functional full-power state) when the kernel
+17	needs to use it.  (There also are forms of PM in which components are
+18	placed in a less functional but still usable state instead of being
+19	suspended; an example would be reducing the CPU's clock rate.  This
+20	document will not discuss those other forms.)
+21	
+22	When the parts being suspended include the CPU and most of the rest of
+23	the system, we speak of it as a "system suspend".  When a particular
+24	device is turned off while the system as a whole remains running, we
+25	call it a "dynamic suspend" (also known as a "runtime suspend" or
+26	"selective suspend").  This document concentrates mostly on how
+27	dynamic PM is implemented in the USB subsystem, although system PM is
+28	covered to some extent (see Documentation/power/*.txt for more
+29	information about system PM).
+30	
+31	Note: Dynamic PM support for USB is present only if the kernel was
+32	built with CONFIG_USB_SUSPEND enabled (which depends on
+33	CONFIG_PM_RUNTIME).  System PM support is present only if the kernel
+34	was built with CONFIG_SUSPEND or CONFIG_HIBERNATION enabled.
+35	
+36	
+37		What is Remote Wakeup?
+38		----------------------
+39	
+40	When a device has been suspended, it generally doesn't resume until
+41	the computer tells it to.  Likewise, if the entire computer has been
+42	suspended, it generally doesn't resume until the user tells it to, say
+43	by pressing a power button or opening the cover.
+44	
+45	However some devices have the capability of resuming by themselves, or
+46	asking the kernel to resume them, or even telling the entire computer
+47	to resume.  This capability goes by several names such as "Wake On
+48	LAN"; we will refer to it generically as "remote wakeup".  When a
+49	device is enabled for remote wakeup and it is suspended, it may resume
+50	itself (or send a request to be resumed) in response to some external
+51	event.  Examples include a suspended keyboard resuming when a key is
+52	pressed, or a suspended USB hub resuming when a device is plugged in.
+53	
+54	
+55		When is a USB device idle?
+56		--------------------------
+57	
+58	A device is idle whenever the kernel thinks it's not busy doing
+59	anything important and thus is a candidate for being suspended.  The
+60	exact definition depends on the device's driver; drivers are allowed
+61	to declare that a device isn't idle even when there's no actual
+62	communication taking place.  (For example, a hub isn't considered idle
+63	unless all the devices plugged into that hub are already suspended.)
+64	In addition, a device isn't considered idle so long as a program keeps
+65	its usbfs file open, whether or not any I/O is going on.
+66	
+67	If a USB device has no driver, its usbfs file isn't open, and it isn't
+68	being accessed through sysfs, then it definitely is idle.
+69	
+70	
+71		Forms of dynamic PM
+72		-------------------
+73	
+74	Dynamic suspends occur when the kernel decides to suspend an idle
+75	device.  This is called "autosuspend" for short.  In general, a device
+76	won't be autosuspended unless it has been idle for some minimum period
+77	of time, the so-called idle-delay time.
+78	
+79	Of course, nothing the kernel does on its own initiative should
+80	prevent the computer or its devices from working properly.  If a
+81	device has been autosuspended and a program tries to use it, the
+82	kernel will automatically resume the device (autoresume).  For the
+83	same reason, an autosuspended device will usually have remote wakeup
+84	enabled, if the device supports remote wakeup.
+85	
+86	It is worth mentioning that many USB drivers don't support
+87	autosuspend.  In fact, at the time of this writing (Linux 2.6.23) the
+88	only drivers which do support it are the hub driver, kaweth, asix,
+89	usblp, usblcd, and usb-skeleton (which doesn't count).  If a
+90	non-supporting driver is bound to a device, the device won't be
+91	autosuspended.  In effect, the kernel pretends the device is never
+92	idle.
+93	
+94	We can categorize power management events in two broad classes:
+95	external and internal.  External events are those triggered by some
+96	agent outside the USB stack: system suspend/resume (triggered by
+97	userspace), manual dynamic resume (also triggered by userspace), and
+98	remote wakeup (triggered by the device).  Internal events are those
+99	triggered within the USB stack: autosuspend and autoresume.  Note that
+100	all dynamic suspend events are internal; external agents are not
+101	allowed to issue dynamic suspends.
+102	
+103	
+104		The user interface for dynamic PM
+105		---------------------------------
+106	
+107	The user interface for controlling dynamic PM is located in the power/
+108	subdirectory of each USB device's sysfs directory, that is, in
+109	/sys/bus/usb/devices/.../power/ where "..." is the device's ID.  The
+110	relevant attribute files are: wakeup, control, and
+111	autosuspend_delay_ms.  (There may also be a file named "level"; this
+112	file was deprecated as of the 2.6.35 kernel and replaced by the
+113	"control" file.  In 2.6.38 the "autosuspend" file will be deprecated
+114	and replaced by the "autosuspend_delay_ms" file.  The only difference
+115	is that the newer file expresses the delay in milliseconds whereas the
+116	older file uses seconds.  Confusingly, both files are present in 2.6.37
+117	but only "autosuspend" works.)
+118	
+119		power/wakeup
+120	
+121			This file is empty if the device does not support
+122			remote wakeup.  Otherwise the file contains either the
+123			word "enabled" or the word "disabled", and you can
+124			write those words to the file.  The setting determines
+125			whether or not remote wakeup will be enabled when the
+126			device is next suspended.  (If the setting is changed
+127			while the device is suspended, the change won't take
+128			effect until the following suspend.)
+129	
+130		power/control
+131	
+132			This file contains one of two words: "on" or "auto".
+133			You can write those words to the file to change the
+134			device's setting.
+135	
+136			"on" means that the device should be resumed and
+137			autosuspend is not allowed.  (Of course, system
+138			suspends are still allowed.)
+139	
+140			"auto" is the normal state in which the kernel is
+141			allowed to autosuspend and autoresume the device.
+142	
+143			(In kernels up to 2.6.32, you could also specify
+144			"suspend", meaning that the device should remain
+145			suspended and autoresume was not allowed.  This
+146			setting is no longer supported.)
+147	
+148		power/autosuspend_delay_ms
+149	
+150			This file contains an integer value, which is the
+151			number of milliseconds the device should remain idle
+152			before the kernel will autosuspend it (the idle-delay
+153			time).  The default is 2000.  0 means to autosuspend
+154			as soon as the device becomes idle, and negative
+155			values mean never to autosuspend.  You can write a
+156			number to the file to change the autosuspend
+157			idle-delay time.
+158	
+159	Writing "-1" to power/autosuspend_delay_ms and writing "on" to
+160	power/control do essentially the same thing -- they both prevent the
+161	device from being autosuspended.  Yes, this is a redundancy in the
+162	API.
+163	
+164	(In 2.6.21 writing "0" to power/autosuspend would prevent the device
+165	from being autosuspended; the behavior was changed in 2.6.22.  The
+166	power/autosuspend attribute did not exist prior to 2.6.21, and the
+167	power/level attribute did not exist prior to 2.6.22.  power/control
+168	was added in 2.6.34, and power/autosuspend_delay_ms was added in
+169	2.6.37 but did not become functional until 2.6.38.)
+170	
+171	
+172		Changing the default idle-delay time
+173		------------------------------------
+174	
+175	The default autosuspend idle-delay time (in seconds) is controlled by
+176	a module parameter in usbcore.  You can specify the value when usbcore
+177	is loaded.  For example, to set it to 5 seconds instead of 2 you would
+178	do:
+179	
+180		modprobe usbcore autosuspend=5
+181	
+182	Equivalently, you could add to /etc/modprobe.conf a line saying:
+183	
+184		options usbcore autosuspend=5
+185	
+186	Some distributions load the usbcore module very early during the boot
+187	process, by means of a program or script running from an initramfs
+188	image.  To alter the parameter value you would have to rebuild that
+189	image.
+190	
+191	If usbcore is compiled into the kernel rather than built as a loadable
+192	module, you can add
+193	
+194		usbcore.autosuspend=5
+195	
+196	to the kernel's boot command line.
+197	
+198	Finally, the parameter value can be changed while the system is
+199	running.  If you do:
+200	
+201		echo 5 >/sys/module/usbcore/parameters/autosuspend
+202	
+203	then each new USB device will have its autosuspend idle-delay
+204	initialized to 5.  (The idle-delay values for already existing devices
+205	will not be affected.)
+206	
+207	Setting the initial default idle-delay to -1 will prevent any
+208	autosuspend of any USB device.  This is a simple alternative to
+209	disabling CONFIG_USB_SUSPEND and rebuilding the kernel, and it has the
+210	added benefit of allowing you to enable autosuspend for selected
+211	devices.
+212	
+213	
+214		Warnings
+215		--------
+216	
+217	The USB specification states that all USB devices must support power
+218	management.  Nevertheless, the sad fact is that many devices do not
+219	support it very well.  You can suspend them all right, but when you
+220	try to resume them they disconnect themselves from the USB bus or
+221	they stop working entirely.  This seems to be especially prevalent
+222	among printers and scanners, but plenty of other types of device have
+223	the same deficiency.
+224	
+225	For this reason, by default the kernel disables autosuspend (the
+226	power/control attribute is initialized to "on") for all devices other
+227	than hubs.  Hubs, at least, appear to be reasonably well-behaved in
+228	this regard.
+229	
+230	(In 2.6.21 and 2.6.22 this wasn't the case.  Autosuspend was enabled
+231	by default for almost all USB devices.  A number of people experienced
+232	problems as a result.)
+233	
+234	This means that non-hub devices won't be autosuspended unless the user
+235	or a program explicitly enables it.  As of this writing there aren't
+236	any widespread programs which will do this; we hope that in the near
+237	future device managers such as HAL will take on this added
+238	responsibility.  In the meantime you can always carry out the
+239	necessary operations by hand or add them to a udev script.  You can
+240	also change the idle-delay time; 2 seconds is not the best choice for
+241	every device.
+242	
+243	If a driver knows that its device has proper suspend/resume support,
+244	it can enable autosuspend all by itself.  For example, the video
+245	driver for a laptop's webcam might do this (in recent kernels they
+246	do), since these devices are rarely used and so should normally be
+247	autosuspended.
+248	
+249	Sometimes it turns out that even when a device does work okay with
+250	autosuspend there are still problems.  For example, the usbhid driver,
+251	which manages keyboards and mice, has autosuspend support.  Tests with
+252	a number of keyboards show that typing on a suspended keyboard, while
+253	causing the keyboard to do a remote wakeup all right, will nonetheless
+254	frequently result in lost keystrokes.  Tests with mice show that some
+255	of them will issue a remote-wakeup request in response to button
+256	presses but not to motion, and some in response to neither.
+257	
+258	The kernel will not prevent you from enabling autosuspend on devices
+259	that can't handle it.  It is even possible in theory to damage a
+260	device by suspending it at the wrong time.  (Highly unlikely, but
+261	possible.)  Take care.
+262	
+263	
+264		The driver interface for Power Management
+265		-----------------------------------------
+266	
+267	The requirements for a USB driver to support external power management
+268	are pretty modest; the driver need only define
+269	
+270		.suspend
+271		.resume
+272		.reset_resume
+273	
+274	methods in its usb_driver structure, and the reset_resume method is
+275	optional.  The methods' jobs are quite simple:
+276	
+277		The suspend method is called to warn the driver that the
+278		device is going to be suspended.  If the driver returns a
+279		negative error code, the suspend will be aborted.  Normally
+280		the driver will return 0, in which case it must cancel all
+281		outstanding URBs (usb_kill_urb()) and not submit any more.
+282	
+283		The resume method is called to tell the driver that the
+284		device has been resumed and the driver can return to normal
+285		operation.  URBs may once more be submitted.
+286	
+287		The reset_resume method is called to tell the driver that
+288		the device has been resumed and it also has been reset.
+289		The driver should redo any necessary device initialization,
+290		since the device has probably lost most or all of its state
+291		(although the interfaces will be in the same altsettings as
+292		before the suspend).
+293	
+294	If the device is disconnected or powered down while it is suspended,
+295	the disconnect method will be called instead of the resume or
+296	reset_resume method.  This is also quite likely to happen when
+297	waking up from hibernation, as many systems do not maintain suspend
+298	current to the USB host controllers during hibernation.  (It's
+299	possible to work around the hibernation-forces-disconnect problem by
+300	using the USB Persist facility.)
+301	
+302	The reset_resume method is used by the USB Persist facility (see
+303	Documentation/usb/persist.txt) and it can also be used under certain
+304	circumstances when CONFIG_USB_PERSIST is not enabled.  Currently, if a
+305	device is reset during a resume and the driver does not have a
+306	reset_resume method, the driver won't receive any notification about
+307	the resume.  Later kernels will call the driver's disconnect method;
+308	2.6.23 doesn't do this.
+309	
+310	USB drivers are bound to interfaces, so their suspend and resume
+311	methods get called when the interfaces are suspended or resumed.  In
+312	principle one might want to suspend some interfaces on a device (i.e.,
+313	force the drivers for those interface to stop all activity) without
+314	suspending the other interfaces.  The USB core doesn't allow this; all
+315	interfaces are suspended when the device itself is suspended and all
+316	interfaces are resumed when the device is resumed.  It isn't possible
+317	to suspend or resume some but not all of a device's interfaces.  The
+318	closest you can come is to unbind the interfaces' drivers.
+319	
+320	
+321		The driver interface for autosuspend and autoresume
+322		---------------------------------------------------
+323	
+324	To support autosuspend and autoresume, a driver should implement all
+325	three of the methods listed above.  In addition, a driver indicates
+326	that it supports autosuspend by setting the .supports_autosuspend flag
+327	in its usb_driver structure.  It is then responsible for informing the
+328	USB core whenever one of its interfaces becomes busy or idle.  The
+329	driver does so by calling these six functions:
+330	
+331		int  usb_autopm_get_interface(struct usb_interface *intf);
+332		void usb_autopm_put_interface(struct usb_interface *intf);
+333		int  usb_autopm_get_interface_async(struct usb_interface *intf);
+334		void usb_autopm_put_interface_async(struct usb_interface *intf);
+335		void usb_autopm_get_interface_no_resume(struct usb_interface *intf);
+336		void usb_autopm_put_interface_no_suspend(struct usb_interface *intf);
+337	
+338	The functions work by maintaining a usage counter in the
+339	usb_interface's embedded device structure.  When the counter is > 0
+340	then the interface is deemed to be busy, and the kernel will not
+341	autosuspend the interface's device.  When the usage counter is = 0
+342	then the interface is considered to be idle, and the kernel may
+343	autosuspend the device.
+344	
+345	Drivers need not be concerned about balancing changes to the usage
+346	counter; the USB core will undo any remaining "get"s when a driver
+347	is unbound from its interface.  As a corollary, drivers must not call
+348	any of the usb_autopm_* functions after their diconnect() routine has
+349	returned.
+350	
+351	Drivers using the async routines are responsible for their own
+352	synchronization and mutual exclusion.
+353	
+354		usb_autopm_get_interface() increments the usage counter and
+355		does an autoresume if the device is suspended.  If the
+356		autoresume fails, the counter is decremented back.
+357	
+358		usb_autopm_put_interface() decrements the usage counter and
+359		attempts an autosuspend if the new value is = 0.
+360	
+361		usb_autopm_get_interface_async() and
+362		usb_autopm_put_interface_async() do almost the same things as
+363		their non-async counterparts.  The big difference is that they
+364		use a workqueue to do the resume or suspend part of their
+365		jobs.  As a result they can be called in an atomic context,
+366		such as an URB's completion handler, but when they return the
+367		device will generally not yet be in the desired state.
+368	
+369		usb_autopm_get_interface_no_resume() and
+370		usb_autopm_put_interface_no_suspend() merely increment or
+371		decrement the usage counter; they do not attempt to carry out
+372		an autoresume or an autosuspend.  Hence they can be called in
+373		an atomic context.
+374	
+375	The simplest usage pattern is that a driver calls
+376	usb_autopm_get_interface() in its open routine and
+377	usb_autopm_put_interface() in its close or release routine.  But other
+378	patterns are possible.
+379	
+380	The autosuspend attempts mentioned above will often fail for one
+381	reason or another.  For example, the power/control attribute might be
+382	set to "on", or another interface in the same device might not be
+383	idle.  This is perfectly normal.  If the reason for failure was that
+384	the device hasn't been idle for long enough, a timer is scheduled to
+385	carry out the operation automatically when the autosuspend idle-delay
+386	has expired.
+387	
+388	Autoresume attempts also can fail, although failure would mean that
+389	the device is no longer present or operating properly.  Unlike
+390	autosuspend, there's no idle-delay for an autoresume.
+391	
+392	
+393		Other parts of the driver interface
+394		-----------------------------------
+395	
+396	Drivers can enable autosuspend for their devices by calling
+397	
+398		usb_enable_autosuspend(struct usb_device *udev);
+399	
+400	in their probe() routine, if they know that the device is capable of
+401	suspending and resuming correctly.  This is exactly equivalent to
+402	writing "auto" to the device's power/control attribute.  Likewise,
+403	drivers can disable autosuspend by calling
+404	
+405		usb_disable_autosuspend(struct usb_device *udev);
+406	
+407	This is exactly the same as writing "on" to the power/control attribute.
+408	
+409	Sometimes a driver needs to make sure that remote wakeup is enabled
+410	during autosuspend.  For example, there's not much point
+411	autosuspending a keyboard if the user can't cause the keyboard to do a
+412	remote wakeup by typing on it.  If the driver sets
+413	intf->needs_remote_wakeup to 1, the kernel won't autosuspend the
+414	device if remote wakeup isn't available.  (If the device is already
+415	autosuspended, though, setting this flag won't cause the kernel to
+416	autoresume it.  Normally a driver would set this flag in its probe
+417	method, at which time the device is guaranteed not to be
+418	autosuspended.)
+419	
+420	If a driver does its I/O asynchronously in interrupt context, it
+421	should call usb_autopm_get_interface_async() before starting output and
+422	usb_autopm_put_interface_async() when the output queue drains.  When
+423	it receives an input event, it should call
+424	
+425		usb_mark_last_busy(struct usb_device *udev);
+426	
+427	in the event handler.  This tells the PM core that the device was just
+428	busy and therefore the next autosuspend idle-delay expiration should
+429	be pushed back.  Many of the usb_autopm_* routines also make this call,
+430	so drivers need to worry only when interrupt-driven input arrives.
+431	
+432	Asynchronous operation is always subject to races.  For example, a
+433	driver may call the usb_autopm_get_interface_async() routine at a time
+434	when the core has just finished deciding the device has been idle for
+435	long enough but not yet gotten around to calling the driver's suspend
+436	method.  The suspend method must be responsible for synchronizing with
+437	the I/O request routine and the URB completion handler; it should
+438	cause autosuspends to fail with -EBUSY if the driver needs to use the
+439	device.
+440	
+441	External suspend calls should never be allowed to fail in this way,
+442	only autosuspend calls.  The driver can tell them apart by checking
+443	the PM_EVENT_AUTO bit in the message.event argument to the suspend
+444	method; this bit will be set for internal PM events (autosuspend) and
+445	clear for external PM events.
+446	
+447	
+448		Mutual exclusion
+449		----------------
+450	
+451	For external events -- but not necessarily for autosuspend or
+452	autoresume -- the device semaphore (udev->dev.sem) will be held when a
+453	suspend or resume method is called.  This implies that external
+454	suspend/resume events are mutually exclusive with calls to probe,
+455	disconnect, pre_reset, and post_reset; the USB core guarantees that
+456	this is true of autosuspend/autoresume events as well.
+457	
+458	If a driver wants to block all suspend/resume calls during some
+459	critical section, the best way is to lock the device and call
+460	usb_autopm_get_interface() (and do the reverse at the end of the
+461	critical section).  Holding the device semaphore will block all
+462	external PM calls, and the usb_autopm_get_interface() will prevent any
+463	internal PM calls, even if it fails.  (Exercise: Why?)
+464	
+465	
+466		Interaction between dynamic PM and system PM
+467		--------------------------------------------
+468	
+469	Dynamic power management and system power management can interact in
+470	a couple of ways.
+471	
+472	Firstly, a device may already be autosuspended when a system suspend
+473	occurs.  Since system suspends are supposed to be as transparent as
+474	possible, the device should remain suspended following the system
+475	resume.  But this theory may not work out well in practice; over time
+476	the kernel's behavior in this regard has changed.  As of 2.6.37 the
+477	policy is to resume all devices during a system resume and let them
+478	handle their own runtime suspends afterward.
+479	
+480	Secondly, a dynamic power-management event may occur as a system
+481	suspend is underway.  The window for this is short, since system
+482	suspends don't take long (a few seconds usually), but it can happen.
+483	For example, a suspended device may send a remote-wakeup signal while
+484	the system is suspending.  The remote wakeup may succeed, which would
+485	cause the system suspend to abort.  If the remote wakeup doesn't
+486	succeed, it may still remain active and thus cause the system to
+487	resume as soon as the system suspend is complete.  Or the remote
+488	wakeup may fail and get lost.  Which outcome occurs depends on timing
+489	and on the hardware and firmware design.

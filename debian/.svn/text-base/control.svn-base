@@ -1,0 +1,15 @@
+Source: hcan
+Section: misc
+Priority: optional
+Maintainer: Martin Haller <mah@iuse.org>
+Build-Depends: debhelper (>> 4.0.0), dpatch, devscripts, libboost-regex-dev, libboost-program-options-dev, libreadline5-dev, libpopt-dev
+Standards-Version: 0.96
+
+Package: hcan
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: HCAN Administration Tools
+  http://www.iuse.org
+  http://wiki.iuse.org
+  
+

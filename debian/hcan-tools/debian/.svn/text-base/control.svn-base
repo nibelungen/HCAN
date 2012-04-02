@@ -1,0 +1,12 @@
+Source: hcan-tools
+Section: misc
+Priority: optional
+Maintainer: Martin Haller <mah@iuse.org>
+Build-Depends: debhelper (>> 4.0.0), dpatch
+Standards-Version: 0.96
+
+Package: hcan-tools
+Architecture: i386
+Depends: libboost-program-options1.33.1, libreadline5, libstdc++6, libc6, libgcc1, libncurses5
+Description: HCAN Administration Tools, http://www.iuse.org
+

@@ -1,0 +1,24 @@
+Anpassungen in anyremote2html: 
+0. Debugmeldungen:
+	# IL
+---
+1. Hier ueberfluessigen Root-Button entfernt: 
+	# ex: httpTail  = '<a href=\"/\">Root</a><br></center></body>\n</html>'
+	httpTail  = '' # IL: root raus
+---
+2. Vereinfachte Bedienung im List-Menu: 
+Anzeige in renderListForm statt addFormMenu jetzt addMenu verwendet.
+	addLinkListMenu
+	self.addLinkListMenu() # ex: self.addFormMenu()
+---
+3. password ok, dann ohne OK-Button weiter: 
+	if askPassword and button == 'Ok':
+---
+
+
+renderListForm
+renderControlForm    Vergleichen und Links aus   renderControlForm    nach  renderListForm uebernehmen
+---
+Debugausgaben einfügen: 
+"if debug: print "dispatchToReader",msg"
+"if debug: print  "Converted "+self.path"

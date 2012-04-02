@@ -1,0 +1,9 @@
+Package: hcan
+Version: 2.0-2
+Architecture: i386
+Maintainer: Ingo Lages <i.Lages@gmx.de>
+Installed-Size: 1420
+Section: misc
+Priority: optional
+Description: HCAN Administration Tools
+  http://www.iuse.org, http://wiki.iuse.org

@@ -1,0 +1,12 @@
+[34;1m> heizung
+[30;0m|  ID | Modus   | T(ist) | T(soll) | StGrd | Dauer     | Ort 
++-----+---------+--------+---------+-------+-----------+----------
+| 142 | aus     | 16.9   |         |       |           | EG_Wohn-Arbeitszimmer
+| 112 | ein     | 17.3   | 18.3    |       |60         | EG_Flur
+| 144 | aus     | 18.2   |         |       |           | EG_Kueche-Esszimmer
+| 145 | aus     | 14.7   |         |       |           | EG_Bad
+| 147 | aus     | 15.9   |         |       |           | OG_Bad
+| 148 | aus     | 17.6   |         |       |           | OG_K1
+| 149 | aus     | 18.6   |         |       |           | OG_K2
+| 150 | aus     | 18.5   |         |       |           | OG_Schlafzimmer
+[34;1m> [30;0m

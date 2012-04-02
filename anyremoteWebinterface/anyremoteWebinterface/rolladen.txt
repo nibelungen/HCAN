@@ -1,0 +1,21 @@
+[34;1m> rolladen
+[30;0mGruppe:  Status:   Name:
+  77       93      ---EG-gesamt---
+  77       89      EG_Wohnzimmer-Tuer
+  77       88      EG_Arbeitszimmer
+  77       95      EG_Flur
+  77       92      EG_Kueche
+  77       92      EG_Esszi-Tuer
+  77       92      EG_Esszi-neben-Tuer
+  77       89      EG_Esszi-West-links
+  77       92      EG_Esszi-West-Mitte
+  70       93      EG_Esszi-West-rechts
+  73       89      ---OG-gesamt---
+  72       88      OG_K1-Doppel-Fenster
+  74       89      OG_K1-Einzel-Fenster
+  82       95      OG_K2-Fenster
+  80       92      OG_K2-Balkon-Tuer
+  84       92      OG_Schlafzimmer-Fenster
+  88       92      OG_Schlafzimmer-Balkon-Tuer
+  52      100      OG_Bad
+[34;1m> [30;0m

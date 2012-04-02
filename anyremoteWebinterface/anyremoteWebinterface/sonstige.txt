@@ -1,0 +1,9 @@
+[34;1m> sonstige
+[30;0mGruppe:  Status:   Name:
+  83      ein     Musikanlage
+  83      -       Videoprojektor
+  76      ein     Garten-Brunnen-Pumpe
+  76      -       LAN-Drucker
+  87      -       HI-Server
+  87      -       Zentral-Heizung
+[34;1m> [30;0m

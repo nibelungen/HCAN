@@ -1,0 +1,1196 @@
+#!/usr/bin/env python
+
+"""
+v 1.4
+
+anyremote2html
+WEB-based GUI for anyRemote - a bluetooth remote for your PC.
+
+Copyright (C) 2007,2008,2009,2010 Mikhail Fedotov <anyremote@mail.ru>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA. 
+"""
+
+import cgi
+import getopt
+import os
+import random
+import signal
+import socket
+import string
+import sys
+import threading
+import time
+import Queue
+import Cookie
+
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+class arHandler(BaseHTTPRequestHandler):
+            
+    def sendImage(self, filePath):
+        global secure, cookie
+	
+        f=open(filePath, 'r')
+	if f:
+	    self.send_response(200)
+	    self.send_header("Content-type",  "image/png")
+	    self.send_header("Cache-Control", "public, max-age=36000")
+	    
+	    if secure > 0:
+	        self.send_header("Set-Cookie", "anyremote_id=" + cookie)
+		secure = 2
+	    self.end_headers()
+	    
+            string = f.read()
+            self.wfile.write(string)
+	    
+	    f.close() 
+
+    def getImage(self):
+    
+        global iconDir, iSize
+	self.sendImage(iconDir + os.sep + iSize + os.sep + self.path)
+
+
+    def getFavicon(self):
+    
+        global iconDir
+	self.sendImage(iconDir + os.sep + "anyRemote.png")
+        
+    
+    def dispatchToReader(self, msg):
+        global toReader, needUpload
+	if debug: print "dispatchToReader",msg
+	print "IL dispatchToReader",msg # IL
+	try:
+	    toReader.put(msg)
+	    
+	    if needUpload == -1:
+	        needUpload = 1
+		   
+	except Queue.Full:
+	    pass
+
+    def do_GET(self):
+        global httpPage, httpRate, ls_items, ls_selidx, debug, secure, cookie, needUpload, uploadTmout, refresh, maxWait, askPassword
+        
+	if debug: print time.asctime(time.localtime()),"===================== do_GET =====================",secure
+	
+	maxWaitTime = maxWait
+	try:
+	    if debug: print  time.asctime(time.localtime()),"Got "+self.path
+            
+	    timeCnt     = 0.1
+	    rcvCookie   = ''
+	    
+	    if secure > 1:
+	        try:
+	            cookiesstring = self.headers.get('Cookie')
+                    if cookiesstring:
+                        cookies = Cookie.SimpleCookie(cookiesstring)
+                        rcvCookie = cookies["anyremote_id"].value
+		except Cookie.CookieError:
+		    pass
+		    
+	        if debug: print time.asctime(time.localtime()),"Got cookie:",rcvCookie
+		
+		if  rcvCookie != cookie:
+	            self.dispatchToReader("_DISCONNECT_")
+		    # not to fall into "Got root request"
+		    self.path = "_DISCONNECT_"
+		    if debug:
+		        print time.asctime(time.localtime()),'do_GET: incorrect cookie'
+		      
+	    else:
+	        cookie = str(random.random())
+		    
+	    
+	    self.path = self.path.replace('%20',' ').replace('+',' ')
+	    if debug: print  "Converted "+self.path
+	    
+	    
+            if self.path.endswith(".png"):
+            	
+                self.getImage()
+                return
+
+            elif self.path.endswith("favicon.ico"):
+            	
+                self.getFavicon()
+                return
+                
+            elif self.path == "/" or self.path.startswith("/?op="):
+	    
+	        # first clause:  just reload page
+	        # second clause: user does not selected anything in the list and pushes Execute
+	    
+	        if debug: print  "Got root request"
+		needUpload = -1
+	    
+            elif self.path.startswith("/?list="):
+            	print  "ooo IL: list in pressed link ooo" # IL
+                tuples = self.path[2:]
+                tList = tuples.split('&')
+                button = ''
+		
+                for keyValue in tList: # IL hier wird der List-Index behandelt 
+
+                    l2 = keyValue.split('=')
+                    
+                    if len(l2) != 2:
+                    	return
+                    
+		    if l2[0] == 'op':
+		    	 button = l2[1]
+			    
+                if button == '' and debug: 
+                    print  "ERROR: Got menu request from list, but button is not defined !!!"
+                    return
+			    
+                for keyValue in tList:
+                	l2 = keyValue.split('=')
+			if l2[0] != 'op':
+			    idx = l2[1]
+			    i = "%s" % (int(idx) + 1)
+                            if int(idx) >= len(ls_items):
+                                return
+			    
+			    if debug: print  "Msg:"+button+"("+i+","+ls_items[int(idx)]+")" # IL z.B. Msg:ein(4,0.0 EG_Kueche-Esszimmer)
+			    self.dispatchToReader("Msg:"+button+"("+i+","+ls_items[int(idx)]+")")
+			
+
+            elif self.path.find("?editfield=") != -1:
+	    
+	        start = self.path.find("?editfield=")
+            	
+                tuples = self.path[start+1:]
+                tList = tuples.split('&')
+                button = ''
+		
+                for keyValue in tList:
+
+                	l2 = keyValue.split('=')
+                        
+                        if len(l2) != 2:
+                            return
+                        
+			if l2[0] == 'op':
+			    button = l2[1]
+                
+		if button == '' and debug: 
+                    print  "ERROR: Got menu request from editfield, but button is not defined !!!"
+                    return
+		
+		value = ''  
+                for keyValue in tList:
+                	l2 = keyValue.split('=')
+			
+			if l2[0] == 'editfield':
+			    value = l2[1] 
+
+		if debug: print  "Got menu request from editfield >"+value+"<"
+                
+		if askPassword and button == 'Ok':
+		   self.dispatchToReader("Msg:_PASSWORD_(,"+value+")")  
+		   if  maxWaitTime < 5:
+		       maxWaitTime = 5  # override
+	        else:
+                   self.dispatchToReader("Msg:"+button+"(,"+value+")") # IL
+		   
+	        askPassword = False
+            
+            elif self.path.endswith("key"):
+            
+                idx1 = self.path.rfind("/")
+                idx2 = self.path.rfind(".")
+                
+                if idx1 >= 0 and idx2 >= 0:
+                    key = self.path[idx1+1:idx2]
+                    
+                    if key == "10":
+                        key = "*"
+                    elif key == "11":
+                        key = "0"
+                    elif key == "12":
+                        key = "#"
+                        
+                    self.dispatchToReader("+CKEV: "+key+",1")
+
+            elif self.path.endswith("menu"):
+            
+                idx1 = self.path.rfind("/")
+                idx2 = self.path.rfind(".")
+                if idx1 >= 0 and idx2 >= 0:
+                    menu = self.path[idx1+1:idx2]
+                    
+                    if debug: print menu
+                    self.dispatchToReader("Msg:"+menu)
+
+            else:
+            
+                print "Skip GET"
+                return
+		
+	    if debug: print 'needUpload=',needUpload
+            
+            # wait maxWaitTime seconds max
+	    while needUpload != -1 and timeCnt < maxWaitTime:
+	        if debug: print time.asctime(time.localtime()),'Continue sleep ',timeCnt
+                time.sleep(0.1)
+                timeCnt = timeCnt + 0.1
+            
+            if debug:
+                t = "%s" % (timeCnt)    
+	        print time.asctime(time.localtime()),'Got HTML (takes '+t+' seconds)'
+            
+            # smart refresh rate
+            if refresh < 0:
+            	print 'refresh < 0 needUpload =',needUpload
+            	if needUpload == 0:
+            	    if uploadTmout < 32:
+            		uploadTmout = uploadTmout * 2
+            	elif needUpload == -1:
+	    	    # read all until End() - set max timeout
+            	    uploadTmout = 32
+            	else:
+            	    uploadTmout = 1
+	    	    
+            	if debug: print 'Refresh timeout set to ',uploadTmout
+            
+            	rStr = "%s" % (uploadTmout)
+            	httpRate  = 'HTTP-EQUIV=REFRESH CONTENT=\"' + rStr + ';URL=/\"'
+
+            
+	    httpRsp = httpPageH + httpRate + httpPageT
+            
+	    if debug: print time.asctime(time.localtime()),'write responce'
+	
+ 	    self.send_response(200)
+	    self.send_header("Content-type",  "text/html")
+	    self.send_header("Cache-Control", "no-cache, must-revalidate")
+	    
+	    if secure > 0:
+	    	self.send_header("Set-Cookie", "anyremote_id=" + cookie)
+		secure = 2
+	    self.end_headers()
+            
+	    self.wfile.write(httpRsp)
+            
+	    needUpload = 0;
+            if debug: print time.asctime(time.localtime()),'++++++++++++++++++++++++++++++++++++++++++++++++++'
+            
+            return
+                
+        except IOError:
+            self.send_error(404,'File Not Found: %s' % self.path)
+    
+############################################################################################
+#    
+# Converts anyRemote Set()/Get() requests to HTML
+#
+############################################################################################
+
+class arConverter(threading.Thread):
+
+	# Enum for forms
+	CF=1
+        TX=2
+	LI=3
+	FM=4
+        WM=5
+        EF=6
+	
+        
+        CurForm = ''
+        
+	# Predefined templates for HTML forms
+	httpHead1 = '<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n<html>\n<head>\n<title>'
+	httpHead2 = '</title>\n'
+	httpHead3 = '<meta '
+	httpHead4 = ' content=\"text/html; charset=utf-8\">\n</head>\n<body '
+	httpHead5 = 'style=\"color:#'
+        httpHead6 = '\" bgcolor=\"#'
+        httpHead7 = '\"><center>'
+	
+	httpScript  = '<script>\nfunction clearForms()\n{\n  var i;\n  for (i = 0; (i < document.forms.length); i++) {\n    document.forms[i].reset();\n  }\n}\n</script>\n'
+        httpScrCall = 'onload="clearForms() '
+
+	httpTable1 = '<table style="text-align: left;" border="1" cellpadding="2" cellspacing="2">\n<tbody>\n<tr>'
+	httpTable2 = '      <td style="vertical-align: top; text-align: center; width=5%;"><a href="'
+	httpTable3 = '"><img src=\"'
+	httpTable4 = '" border="0"></a></td>'
+	httpTable5 = '    </tr>\n<tr>'
+	httpTable6 = '    </tr>\n</tbody>\n</table>'
+        
+        httpMenu1  = ' [<a href=\"'
+        httpMenu2  = '.menu\">' # "Test.menu"
+        httpMenu3  = '</a>] '
+        
+        # IL fuer addLinkListMenu: 
+        httpLinkMenu1A = ' [<a href=\"?list=' # "?list="     # Wird bei checkbox-Select sonst wo erzeugt???? TODO
+        httpLinkMenu1C = '&op=' # "&op="
+        httpLinkMenu2  = '\">'
+        httpLinkMenu3  = '</a>] '
+
+        httpList1  = '<form action=\"/\" method=\"get\">\n<select name=\"list\" size=15 style="width:'
+        httpList2  = 'px;">\n'
+        
+        httpEdit1  = '<h4>'
+        httpEdit2  = '</h4></center>\n<form action=\"\" method=\"get\">\n<input type=\"text\" name=\"editfield\" value=\"'
+        httpEdit2p = '</h4></center>\n<form action=\"\" method=\"get\">\n<input type=\"password\" name=\"editfield\" value=\"'
+        httpEdit3  = '\" />\n<hr>'
+
+	# ex: httpTail  = '<a href=\"/\">Root</a><br></center></body>\n</html>'
+	httpTail  = '' # IL: root raus
+
+        def __init__(self, debug, inQueue):
+            threading.Thread.__init__(self) 
+	    self.debug   = debug
+	    self.inqueue = inQueue
+	    self.needDisconn = False
+        
+        def run(self):
+	    global portA, needToRun, ls_items, ls_selidx, secure
+            
+            if debug: print 'HTTP daemon started'
+                        
+            # Render default HTML page
+            self.defaultControlForm()
+            
+            self.menu       = []
+            
+            self.tx_caption = ''
+            self.tx_font    = 'h6>'
+            self.tx_fg      = '000000'
+            self.tx_bg      = 'FFFFFF'
+            self.tx_menu    = ['Back']
+            self.tx_text    = ''
+
+            self.ls_caption = ''
+            self.ls_font    = 'h4>'
+            self.ls_fg      = '000000'
+            self.ls_bg      = 'FFFFFF'
+            self.ls_menu    = ['Back']
+            ls_items        = []
+	    ls_selidx       = 0
+
+            self.ef_caption = ''
+            self.ef_menu    = ['Back', 'Ok']
+            self.ef_text    = ''
+            self.ef_label   = ''
+            
+            self.prevData   = ''
+
+            self.renderControlForm()
+               
+            if debug: print 'Default web page ready'
+	    
+            while needToRun:
+	    
+	        if debug: print 'Create socket'
+		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		
+                while needToRun:
+                    try:
+		        if debug: print 'Connect socket',portA
+	                s.connect(('localhost', int(portA)))
+                        break
+                    except socket.error, msg:
+		    
+		        if debug: print "error on socket.connect() ",msg
+                        print 'Wait anyRemote to start'
+                        time.sleep(1)
+                        
+                s.setblocking(0)
+                if debug: print 'Connected to anyRemote'
+            
+                while needToRun:
+            
+		    try:
+		        ssend = self.inqueue.get(False)
+			
+			if ssend == '_DISCONNECT_':
+			    if self.debug: print time.asctime(time.localtime()),'Got disconnect request\n'
+			    self.needDisconn = True
+			    break
+ 			else: 
+			    if self.debug: print time.asctime(time.localtime()),'Send to anyRemote '+ssend + "\n"
+			    
+		            try:
+			        s.sendall(ssend)
+	                    except socket.error, NameError:
+	                        if debug: print 'EXCEPTION 1'
+				self.needDisconn = True
+	            except Queue.Empty:
+                        pass
+				
+                    time.sleep(0.1)
+                    data    = ''
+                    allData = ''
+		    
+		    if not self.needDisconn:
+                        try: 
+	    	            dataAll = s.recv(2048)
+ 
+                            idx = dataAll.rfind(');');
+                        
+                            # proceed only with full-readed commands
+                            if idx < 0:
+                                self.prevData = self.prevData + dataAll
+                                continue
+                            else:
+                                data = self.prevData + dataAll[0:idx+2]
+                                self.prevData = dataAll[idx+3:]
+                    
+			    if self.debug:
+			        print time.asctime(time.localtime()),'Got from anyRemote proceed => ', data
+			        print time.asctime(time.localtime()),'Got from anyRemote buffered => ', self.prevData
+                         
+		            if not data: 
+		                if debug: print 'anyRemote die?'
+                                break
+ 			
+			    if self.needDisconn:
+		                if debug: print 'anyRemote asks disconnect ?'
+                                break
+			    else:
+                                self.renderHtml(data)
+				
+				if self.needDisconn:
+				    if debug: print 'anyRemote asks disconnect ?'
+				    break
+                         
+                        except socket.error,msg:
+
+		            # (11, 'Resource temporarily unavailable')
+	                    if self.debug and str(msg.args).find('(11,') < 0: print "socket.error", msg.args
+		        
+			    # (104, 'Connection reset by peer')
+		            if str(msg.args).find('(104') > 0:
+		                if self.debug: print "Got disconnected"
+			        break
+		
+		# got to disconnect somehow		
+                    
+		if self.debug: print 'Close socket', self.needDisconn, needToRun
+		try:
+                    s.shutdown(socket.SHUT_RDWR) 
+		except socket.error,msg:
+		    pass
+                s.close() 
+		self.needDisconn = False
+		secure = 0
+		time.sleep(5)
+		cookie = str(random.random())
+		
+		#inner while
+            # outer while
+	    
+	def setIcons(self, tokens):
+            
+            if not tokens[1] == "SAME":
+                 self.caption = tokens[1]
+
+            i = 2
+            while i < len(tokens):
+                
+                if tokens[i] == "1":
+                    i = i + 1
+                    self.icons[0] = tokens[i]                
+                elif tokens[i] == "2":
+                    i = i + 1
+                    self.icons[1] = tokens[i]
+                elif tokens[i] == "3":
+                    i = i + 1
+                    self.icons[2] = tokens[i]
+                elif tokens[i] == "4":
+                    i = i + 1
+                    self.icons[3] = tokens[i]
+                elif tokens[i] == "5":
+                    i = i + 1
+                    self.icons[4] = tokens[i]
+                elif tokens[i] == "6":
+                    i = i + 1
+                    self.icons[5] = tokens[i]
+                elif tokens[i] == "7":
+                    i = i + 1
+                    self.icons[6] = tokens[i]
+                elif tokens[i] == "8":
+                    i = i + 1
+                    self.icons[7] = tokens[i]
+                elif tokens[i] == "9":
+                    i = i + 1
+                    self.icons[8] = tokens[i]
+                elif tokens[i] == "*":
+                    i = i + 1
+                    self.icons[9] = tokens[i]
+                elif tokens[i] == "0":
+                    i = i + 1
+                    self.icons[10] = tokens[i]
+                elif tokens[i] == "#":
+                    i = i + 1
+                    self.icons[11] = tokens[i]
+                    
+                i = i + 1
+		
+            if self.debug:
+                print self.icons
+
+        def addMenu(self):
+        
+            global httpPageT
+            
+            if len(self.menu) > 0:
+                
+                menu = '<HR>'
+		
+                for item in self.menu:
+                    menu  = menu + self.httpMenu1 + item + self.httpMenu2 + item + self.httpMenu3
+                
+                menu  = menu + '<HR>'
+                
+                httpPageT = httpPageT + menu
+
+        def addFormMenu(self):
+            
+            global httpPageT
+            
+            if len(self.menu) > 0:
+                
+                menu = ''
+                checked = 'checked=\"yes\"'
+                for item in self.menu: # Checkbox-Liste erstellen
+                    menu  = menu + '<input type=\"radio\" name=\"op\" value=\"' + item + '\" ' + checked + '>' +  item + ' \n'
+		    checked = '' # IL Nur die erste Checkbox selektieren
+
+		menu  = menu + '<br><br>\n<input type=\"submit" value=\"Execute\">\n<HR>'
+                
+                httpPageT = httpPageT + menu
+
+        def addLinkListMenu(self):
+        
+            global httpPageT
+            
+            if len(self.menu) > 0:
+               
+                menu = ''
+                #selected = '3'
+                selected = ls_selidx - 1 # IL wir muessen uns den Index anders ermitteln!!!! So nicht!
+		#checked = '' # TODO wieder raus!
+                for item in self.menu: # Link-Liste erstellen
+                    #menu  = menu + '<input type=\"radio\" name=\"op\" value=\"' + item + '\" ' + checked + '>' +  item + ' \n' 
+                    menu  = menu + self.httpLinkMenu1A + str(selected) + self.httpLinkMenu1C + item + self.httpLinkMenu2 + item + self.httpLinkMenu3
+		#		   ' [<a href=\"?list='		    '&op='			 '\">'			     '</a>] '
+		# 1. Wo wir Execute-Button-Bedienung abgehandelt? -> Abschauen wie Index = selected gewonnen wird!
+		# 2. Wo Link-Pressed abgehandelt? -> Dort die Abhandlung von 1. verwenden
+		     
+                menu  = menu + ''
+                #menu  = menu + '<br><br>\n<input type=\"submit" value=\"Execute\">\n<HR>'  # TODO wieder raus!
+                
+                httpPageT = httpPageT + menu
+
+
+
+        def defaultControlForm(self):
+            
+            self.caption = "anyRemote"
+            self.title   = " "
+            self.status  = " "
+            self.font    = "h6>"
+            self.fg      = "FFFFFF"
+            self.bg      = "000000"
+            self.icons   = ["default","default","default","default","default","default","default","default","default","default","default","default"]
+	
+            self.CurForm = self.CF
+            
+        def renderTextForm(self):
+        
+            global httpPageH, httpPageT
+            
+            httpPageH = self.httpHead1 + self.tx_caption + self.httpHead2 + self.httpHead3
+            httpPageT = self.httpHead4 + self.httpHead5 + self.tx_fg + self.httpHead6 + self.tx_bg + self.httpHead7 + "<" + self.tx_font + self.tx_text + "</" + self.font
+                   
+            self.addMenu()
+                   
+            httpPageT = httpPageT + self.httpTail
+
+        def renderListForm(self):
+            
+            global ls_items, ls_selidx, sWidth, httpPageH, httpPageT
+            
+	    onload    = ''
+	    onloadscr = ''
+	    if needUpload:
+		onloadscr = self.httpScript
+	        onload    = self.httpScrCall
+		
+            httpPageH = self.httpHead1 + self.ls_caption + self.httpHead2 + onloadscr + self.httpHead3
+            
+            page = self.httpHead4 + onload + self.httpHead5 + self.ls_fg + self.httpHead6 + self.ls_bg + self.httpHead7 + "<" + self.ls_font + self.httpList1 + sWidth + self.httpList2
+            
+            idx = 0
+            for item in ls_items:
+            
+            	istr = "%d" % (idx)
+		
+		selected = ''
+		if idx == ls_selidx - 1:
+		    selected = ' SELECTED '
+
+            	page = page + '      <option value=\"'  + istr + "\"" + selected +">" + item + '</option>\n'
+                idx = idx + 1
+            
+            httpPageT = page + '</select>\n<hr>'
+            
+            self.addLinkListMenu() # ex: self.addFormMenu()
+            
+            httpPageT = httpPageT + "</form>\n" + "</" + self.font + "\n"+ self.httpTail
+
+        def renderEditForm(self):
+        
+            global httpPageH, httpPageT, askPassword
+            
+            httpPageH = self.httpHead1 + self.ef_caption + self.httpHead2 + self.httpHead3
+	    
+	    inputField =  self.httpEdit2
+	    if askPassword:
+	        inputField =  self.httpEdit2p
+		
+            httpPageT = self.httpHead4 + self.httpHead5 + self.fg + self.httpHead6 + self.bg + self.httpHead7 + "<" + self.font + self.httpEdit1 + self.ef_label + inputField + self.ef_text + self.httpEdit3
+
+ 	    self.addFormMenu()
+
+            httpPageT = httpPageT + "</form>\n" + "</" + self.font + "\n"+ self.httpTail
+
+        def getAccessKey(self, index):
+           
+            if 1 <= index and index <=9:
+               return index
+            elif index == "10":
+               return "*"
+            elif index == "11":
+               return "0"
+            elif index == "12":
+               return "#"
+            else:
+               return index
+        
+        def renderControlForm(self):
+            
+            global iconDir, httpPageH, httpPageT
+            
+            httpPageH = self.httpHead1 + self.caption + self.httpHead2 + self.httpHead3
+            
+            page = self.httpHead4 + self.httpHead5 + self.fg + self.httpHead6 + self.bg + self.httpHead7 + "<" + self.font + self.status + "</" + self.font + self.httpTable1;
+
+            i   = 0
+            col = 1
+            while i < len(self.icons):
+                    maze = "%s" % (i+1)
+                    
+                    page = page + self.httpTable2 + maze + ".key\" accesskey=\"" + self.getAccessKey(maze) + self.httpTable3 + self.icons[i] + ".png" + self.httpTable4
+                    
+                    if col == 3:
+                        page = page + self.httpTable5
+                        col = 0
+                    i   = i   + 1
+                    col = col + 1
+                    
+            httpPageT = page + self.httpTable6 + "<" + self.font + self.title + "</" + self.font
+            
+            self.addMenu()
+            
+            httpPageT = httpPageT + self.httpTail
+
+        def renderCurForm(self):
+        
+            if self.CurForm == self.CF:
+                self.renderControlForm()
+            elif self.CurForm == self.TX:
+                self.renderTextForm()
+            elif self.CurForm == self.LI:
+                self.renderListForm()
+            elif self.CurForm == self.EF:
+                self.renderEditForm()
+            else:
+                self.renderControlForm()
+
+        def renderOneCmd(self, cmd):
+
+            global ls_items, ls_selidx, askPassword, secure, needUpload
+	                
+            if cmd == '':
+                return
+            
+            tokensList = cmd.split(",")
+
+            if tokensList[0] == "Set(icons":
+                
+                self.setIcons(tokensList)
+                
+                if self.CurForm != self.CF:
+                    self.CurForm = self.CF
+                    self.menu = []
+
+                self.renderCurForm()
+                
+            elif tokensList[0] == "Set(font":
+                
+                if tokensList[1] == "small":
+                    self.font    = "h6>"
+                elif tokensList[1] == "medium":
+                    self.font    = "h4>"
+                elif tokensList[1] == "large":
+                    self.font    = "h2>"
+                
+                if self.CurForm != self.CF:
+                    self.CurForm = self.CF
+                    self.menu = []
+
+                self.renderCurForm()
+
+            elif tokensList[0] == "Set(fg":
+                
+                rgb = "%2x%2x%2x" % (int(tokensList[1]), int(tokensList[2]), int(tokensList[3]))
+                self.fg = rgb.replace(" ","0")
+                
+                if self.CurForm != self.CF:
+                    self.CurForm = self.CF
+                    self.menu = []
+
+                self.renderCurForm()
+
+            elif tokensList[0] == "Set(bg":
+            
+                rgb = "%2x%2x%2x" % (int(tokensList[1]), int(tokensList[2]), int(tokensList[3]))
+                self.bg = rgb.replace(" ","0")
+                
+                if self.CurForm != self.CF:
+                    self.CurForm = self.CF
+                    self.menu = []
+                
+                self.renderCurForm()
+
+            elif tokensList[0] == "Set(title":
+
+                self.title = ",".join(tokensList[1:len(tokensList)])
+		
+		if  self.title == 'PASSWORD INVALID':
+		    self.needDisconn = True
+		    secure           = 0
+
+                if self.CurForm != self.CF:
+                    self.CurForm = self.CF
+                    self.menu = []
+
+                self.renderCurForm()
+
+            elif tokensList[0] == "Set(status":
+
+                self.status = ",".join(tokensList[1:len(tokensList)])
+
+                if self.CurForm != self.CF:
+                    self.CurForm = self.CF
+                    self.menu = []
+
+                self.renderCurForm()
+
+            elif tokensList[0] == "Set(list" or tokensList[0] == "Set(iconlist":
+                
+                if tokensList[1] == "close":
+                
+                    if len(tokensList) > 2 and tokensList[2] == "clear":
+			ls_items  = []
+			ls_selidx = 0
+                        
+                    if self.CurForm != self.CF:
+                        self.CurForm = self.CF
+                        self.menu = []
+
+                    self.renderCurForm()
+                
+                elif tokensList[1] == "clear":
+                    
+                    ls_items = []
+                    self.renderCurForm()
+                
+                elif tokensList[1] == "fg":
+                
+                    rgb = "%2x%2x%2x" % (int(tokensList[2]), int(tokensList[3]), int(tokensList[4]))
+                    self.ls_fg = rgb.replace(" ","0")
+                    self.renderCurForm()
+                
+                elif tokensList[1] == "bg":
+
+                    rgb = "%2x%2x%2x" % (int(tokensList[2]), int(tokensList[3]), int(tokensList[4]))
+                    self.ls_bg = rgb.replace(" ","0")
+                    self.renderCurForm()
+
+                elif tokensList[1] == "font":
+
+                    if tokensList[2] == "small":
+                        self.ls_font    = "h6>"
+                    elif tokensList[2] == "medium":
+                        self.ls_font    = "h4>"
+                    elif tokensList[2] == "large":
+                        self.ls_font    = "h2>"
+                    
+                    self.renderCurForm()
+              
+                elif tokensList[1] == "add" or tokensList[1] == "replace":
+               
+               	    if tokensList[1] == "replace":
+                        ls_items  = []
+			ls_selidx = 0
+                 
+                    if not tokensList[2] == "SAME":
+                        self.ls_caption = tokensList[2]
+                    
+                    if tokensList[0] == "Set(list":
+                    	for item in tokensList[3:]:
+                            if item.startswith('\n'):
+                                item = item[1:]
+                            ls_items.append(item)
+                    else:
+                    	for item in tokensList[3:]:
+                            idx = item.find(":")
+                            textpart = item[idx+1:]
+                            ls_items.append(textpart)
+                    
+                    if self.CurForm != self.LI:
+                        self.CurForm = self.LI
+
+                        self.menu = []
+                        for item in self.ls_menu:
+                            self.menu.append(item)
+                        
+                    self.renderCurForm()
+                    
+                elif tokensList[1] == "show":
+                    
+                    if self.CurForm != self.LI:
+                        self.CurForm = self.LI
+
+                        self.menu = []
+                        for item in self.ls_menu:
+                            self.menu.append(item)
+                        
+                    self.renderCurForm()
+                
+		elif tokensList[1] == "select":
+                    
+                    if self.CurForm != self.LI:
+                        self.CurForm = self.LI
+                    
+		    ls_selidx = int(tokensList[2])
+		    # IL if debug: print "IL: List-Index=" + str(ls_selidx)  hier muss der Index schon gesetzt sein
+		    
+                    self.renderCurForm()
+
+            elif tokensList[0] == "Set(text":
+                
+                if tokensList[1] == "close":
+                
+                    if len(tokensList) > 2 and tokensList[2] == "clear":
+			self.tx_text = ''
+                        
+                    if self.CurForm != self.CF:
+                        self.CurForm = self.CF
+                        self.menu = []
+                        
+                    self.renderCurForm()
+                
+                elif tokensList[1] == "clear":
+                    
+                    self.tx_text = ''
+                    self.renderCurForm()
+                
+                elif tokensList[1] == "fg":
+                
+                    rgb = "%2x%2x%2x" % (int(tokensList[2]), int(tokensList[3]), int(tokensList[4]))
+                    self.tx_fg = rgb.replace(" ","0")
+                    self.renderCurForm()
+                
+                elif tokensList[1] == "bg":
+
+                    rgb = "%2x%2x%2x" % (int(tokensList[2]), int(tokensList[3]), int(tokensList[4]))
+                    self.tx_bg = rgb.replace(" ","0")
+                    self.renderCurForm()
+
+                elif tokensList[1] == "font":
+
+                    if tokensList[2] == "small":
+                        self.tx_font    = "h6>"
+                    elif tokensList[2] == "medium":
+                        self.tx_font    = "h4>"
+                    elif tokensList[2] == "large":
+                        self.tx_font    = "h2>"
+                    
+                    self.renderCurForm()
+              
+                elif tokensList[1] == "add" or tokensList[1] == "replace":
+               
+               	    if tokensList[1] == "replace":
+                        self.tx_text = ''
+                 
+                    if not tokensList[2] == "SAME":
+                        self.tx_caption = tokensList[2]
+		    
+                    self.tx_text = self.tx_text + ",".join(tokensList[3:len(tokensList)])
+                    
+                    if self.CurForm != self.TX:
+                        self.CurForm = self.TX
+
+                        self.menu = []
+                        for item in self.tx_menu:
+                            self.menu.append(item)
+
+                    self.renderCurForm()
+                    
+                elif tokensList[1] == "show":
+                    
+                    if self.CurForm != self.TX:
+                        self.CurForm = self.TX
+                        
+                        self.menu = []
+                        for item in self.tx_menu:
+                            self.menu.append(item)
+                            
+                    self.renderCurForm()
+
+            elif tokensList[0] == "Set(menu":
+            
+            	if tokensList[1] == "replace" or tokensList[1] == "add":
+                    if tokensList[1] == "replace":
+                        self.menu = []
+                        if self.CurForm == self.TX:
+                            for item in self.tx_menu:
+                                self.menu.append(item)
+                        elif self.CurForm == self.LI:
+                            for item in self.ls_menu:
+                                self.menu.append(item)
+                        elif self.CurForm == self.EF:
+                            for item in self.ef_menu:
+                                self.menu.append(item)
+                        
+                    for item in tokensList[2:]:
+                        self.menu.append(item)
+                        
+                    self.renderCurForm()
+                
+		elif tokensList[1] == "clear":
+ 
+                    self.menu = []
+                    self.renderCurForm()
+               
+            elif tokensList[0] == "Set(editfield":
+                
+		askPassword = False
+		
+                if len(tokensList) > 1:
+                    self.ef_caption = tokensList[1]
+                else:
+                    self.ef_caption = ''
+                
+                if len(tokensList) > 2:
+                    self.ef_label   = tokensList[2]
+                else:
+                    self.ef_label = ''
+                
+                if len(tokensList) > 3:
+                    self.ef_text    = tokensList[3]
+                else:
+                    self.ef_text = ''
+                
+                if self.CurForm != self.EF:
+                
+                    self.CurForm = self.EF
+                    
+                    self.menu = []
+                    for item in self.ef_menu:
+                        self.menu.append(item)
+
+                self.renderCurForm()
+		
+            elif tokensList[0] == "Get(password":
+	    
+	        self.ef_caption = 'Enter password'
+	        self.ef_label   = 'Enter password'
+		self.ef_text    = ''
+		askPassword     = True
+		secure          = 1
+                
+		if self.CurForm != self.EF:
+                
+                    self.CurForm = self.EF
+                    
+                    self.menu = []
+                    
+		    #for item in self.ef_menu:
+                    #    self.menu.append(item)
+		    # do not add Back item
+                    self.menu.append('Ok')
+
+                self.renderCurForm()
+            
+	    elif tokensList[0] == "Set(disconnect":
+	    
+	        self.needDisconn = True
+
+
+        def renderHtml(self, data):
+        
+            global needUpload
+	    
+	    if self.debug: print 'renderHtml ',needUpload
+            
+            cmdList = data.split(");")
+            
+	    gotEnd = False
+	    for oneCmd in cmdList:
+	        if self.debug == 1: print 'CMD: >'+oneCmd+'<'
+	    
+	        if oneCmd == 'End(':
+	    	    gotEnd = True
+                else:
+                    self.renderOneCmd(oneCmd)
+	    	    if self.debug: print time.asctime(time.localtime()),'CMD: >DONE<'
+		    
+		    #  handle as special case
+		    if oneCmd == 'Get(password':
+		        gotEnd = True
+
+		    if oneCmd != '':
+                        needUpload = 1
+		
+		if self.needDisconn:
+		    return
+		    
+	    if gotEnd:
+	        if self.debug: print time.asctime(time.localtime()),'CMD: >FINALIZE<'
+	        needUpload = -1
+
+	    if self.debug: print time.asctime(time.localtime()),'renderHtml finished'
+
+
+############################################################################################
+
+
+def usage():
+	print 'anyremote2html -w <web-port> -a <anyRemote port> -i <directory with icons> -s 16|32|48|64|128 '
+	print '               -r <refresh rate> --width <integer> -d'
+        print ''	
+        print '-w <web port> - use specified port for HTTP server, default is 5550'
+        print '-a <anyRemote port> - use specified port to connect to anyRemote, default is 5000'
+        print '-i <directory with icons>, default is /usr/share/pixmaps/anyremote2html/'
+        print '-s 16|32|48|64|128 - use specified icon size, default is 32'
+        print '-r no|smart|<positive int> - set refresh rate for web page, \"no\" means no refresh (default),'
+	print '   \"smart\" means variable refresh rate'
+        print '-m <seconds> - set maximal waiting time for anyRemote\'s responce, default is 7 seconds'
+        print '--width <positive int> - assume screen width is specified value, default is 240'
+        print '-d - show debug output'
+    
+
+def main():
+	global debug, refresh, portW, portA, iSize, iconDir, sWidth, maxWait, needToRun, needUpload, uploadTmout, httpPage, httpRate, toReader, askPassword, secure, cookie
+
+        os.system("pwd")
+
+        try:
+            opts, args = getopt.getopt(sys.argv[1:], "hdw:a:i:s:r:m:", ["help", "debug", "webport=", "anyremoteport=", "icondir=", "size=", "refresh=", "width=", "maxwait="])
+        except getopt.GetoptError:
+            usage()
+            sys.exit(2)
+
+        debug       = 0
+        refresh     = 0
+        portA       = "5000"
+        portW       = "5550"
+        iSize       = "32"
+        sWidth      = "240"
+        iconDir     = "/usr/share/pixmaps/anyremote2html/"
+        httpPage    = ""
+	maxWait     = 7
+	askPassword = False
+	secure      = 0
+	cookie      = str(random.random())
+
+        for o, v in opts:
+        	if o in ("-d", "--debug"):
+			debug = 1
+        	if o in ("-h", "--help"):
+                	usage()
+                        sys.exit()
+                if o in ("-w", "--webport"):
+                	portW = v
+
+                if o in ("-a", "--anyremoteport"):
+                	portA = v
+
+                if o in ("-i", "--icondir"):
+			iconDir = v
+
+                if o in ("-r", "--refresh"):
+                	if v == 'no':
+                            refresh = 0
+                        elif v == 'smart':
+                            refresh = -1
+                        else:    
+			    refresh = int(v)
+
+                if o == "--width":
+			sWidth = v
+
+                if o in ("-s", "--size"):
+			if v in ( "16", "32", "48", "64", "128"): 
+                		iSize = v
+
+                if o in ("-m", "--maxwait"):
+			maxWait = float(v)
+			
+        needToRun = True
+
+        needUpload  = 1
+        uploadTmout = 1
+        
+        if refresh > 0:
+            rStr = "%s" % (refresh)
+            httpRate  = 'HTTP-EQUIV=REFRESH CONTENT=\"' + rStr + ';URL=/.\"'
+        elif refresh == 0:
+            httpRate  = 'HTTP-EQUIV=\"Content-Type\"'
+        else:
+            httpRate = ''
+
+        toReader  = Queue.Queue(0)
+        anyRemote = arConverter(debug,toReader)
+        anyRemote.start()
+
+        try:
+        	server = HTTPServer(('', int(portW)), arHandler)
+                server.serve_forever()
+
+        except KeyboardInterrupt:
+        	
+                print '^C received, shutting down server'
+                needToRun = False
+                server.socket.close()
+
+
+if __name__ == "__main__":
+	main()
+

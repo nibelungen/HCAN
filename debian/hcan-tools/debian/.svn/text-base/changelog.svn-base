@@ -1,0 +1,104 @@
+hcan-tools (1.0-1) unstable; urgency=low
+
+  * Release 1.0
+
+ -- Martin Haller <mah@iuse.org>  Fri, 28 Dec 2007 08:27:25 +0100
+
+hcan-tools (0.99.6-1) unstable; urgency=low
+
+  * diverse Bugfixe in der Firmware
+  * einige EDS Aenderungen
+
+ -- Martin Haller <mah@iuse.org>  Fri, 23 Nov 2007 10:02:13 +0100
+
+hcan-tools (0.99.5-1) unstable; urgency=low
+
+  * --syslog loggt nun auch die Source Adresse
+
+ -- Martin Haller <mah@iuse.org>  Sun, 07 Oct 2007 12:04:47 +0200
+
+hcan-tools (0.99.4-1) unstable; urgency=low
+
+  * EDS Aenderungen
+
+ -- Martin Haller <mah@iuse.org>  Mon, 01 Oct 2007 19:27:50 +0200
+
+hcan-tools (0.99.3-1) unstable; urgency=low
+
+  * telican kann jetzt auch ohne Farbe im Dump Mode ausgeben, das ist
+    fuer Logfiles interessant.
+
+ -- Martin Haller <mah@iuse.org>  Thu, 19 Jul 2007 18:43:55 +0200
+
+hcan-tools (0.99.2-1) unstable; urgency=low
+
+  * telican: einige neue EDS Block-Definitionen
+
+ -- Martin Haller <mah@iuse.org>  Sat, 14 Jul 2007 16:54:12 +0200
+
+hcan-tools (0.99.1-1) unstable; urgency=low
+
+  * telican: neu im EDS: powerport_page
+  * telican kann jetzt Strings mit Spaces als char[] values in 
+    EDS Objekte schreiben
+
+ -- Martin Haller <mah@iuse.org>  Sat, 23 Jun 2007 20:42:11 +0200
+
+hcan-tools (0.99-2) unstable; urgency=low
+
+  * telican: update wegen diverser EDS Aenderungen
+    ACHTUNG: EDS Config ist nicht mehr kompatibel!
+
+ -- Martin Haller <mah@iuse.org>  Sat, 23 Jun 2007 10:46:34 +0200
+
+hcan-tools (0.98.2-1) unstable; urgency=low
+
+  * telican: EDS update wegen rolladen; ACHTUNG: der rolladen-EDS
+    Block ist nicht mehr kompatibel; die Config muss vorher exportiert
+    und wieder importiert werden
+
+ -- Martin Haller <mah@iuse.org>  Tue, 19 Jun 2007 16:58:10 +0200
+
+hcan-tools (0.98.1-1) unstable; urgency=low
+
+  * telican: EDS update wegen rolladen_page
+
+ -- Martin Haller <mah@iuse.org>  Tue, 29 May 2007 18:37:15 +0200
+
+hcan-tools (0.98-2) unstable; urgency=low
+
+  * telican: Multicast Adressen zusammengefuegt (relevant fuer telican --timed)
+
+ -- Martin Haller <mah@iuse.org>  Sun, 06 May 2007 10:46:14 +0200
+
+hcan-tools (0.98-1) unstable; urgency=low
+
+  * controller-1612/telican: Zeitschaltuhr eingebaut (telican EDS update)
+
+ -- Martin Haller <mah@iuse.org>  Sun, 06 May 2007 09:46:14 +0200
+
+hcan-tools (0.97-1) unstable; urgency=low
+
+  * userpanel: Shortcut Feature eingebaut (telican EDS update)
+
+ -- Martin Haller <mah@iuse.org>  Thu, 19 Apr 2007 20:44:49 +0200
+
+hcan-tools (0.96-1) unstable; urgency=low
+
+  * telican/controller-1612: Rolladen auf Laufzeit umgestellt
+
+ -- Martin Haller <mah@iuse.org>  Tue, 17 Apr 2007 17:34:50 +0200
+
+hcan-tools (0.95-2) unstable; urgency=low
+
+  * eds update
+
+ -- Martin Haller <mah@iuse.org>  Fri, 13 Apr 2007 09:20:54 +0200
+
+hcan-tools (0.95-1) unstable; urgency=low
+
+  * initial release
+
+ -- Martin Haller <mah@iuse.org>  Mon, 19 Feb 2007 20:00:00 +0200
+
+

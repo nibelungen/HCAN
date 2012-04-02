@@ -1,0 +1,12 @@
+[34;1m> tempsensor
+[30;0mGruppe: Temperatur:   Name:
+  90     18.1875       EG_Kueche-Esszimmer
+  92     14.6875       EG_Bad
+  89     16.9375       EG_Wohn-Arbeitszimmer
+  93     17.1875       EG_Flur
+  49     17.3125       OG_Flur
+  51     15.6875       OG_Bad
+ 200     17.6875       OG_K1
+ 201     18.5625       OG_K2
+  66     18.4375       OG_Schlafzimmer
+[34;1m> [30;0m

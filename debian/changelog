@@ -1,0 +1,197 @@
+hcan (2.0-2) maverick; urgency=low
+
+  * HCAN 2.0 Release fuer Ubuntu 10.10; inkl. Patches
+
+ -- Ingo Lages <i.Lages@gmx.de>  Wed, 03 Aug 2011 21:00:00 +0100
+
+hcan (2.0-1) lenny; urgency=low
+
+  * HCAN 2.0 Release
+
+ -- Martin Haller <mah@grobi1.hamsternet>  Fri, 20 Feb 2009 11:09:07 +0100
+
+hcan (1.95-4) lenny; urgency=low
+
+  * some fixes
+
+ -- Martin Haller <mah@grobi1.hamsternet>  Sun, 08 Feb 2009 11:31:31 +0100
+
+hcan (1.95-3) lenny; urgency=low
+
+  * Prerelease fuer Version 2.0
+
+ -- Martin Haller <mah@grobi1.hamsternet>  Sun, 08 Feb 2009 11:26:32 +0100
+
+hcan (1.95-2) lenny; urgency=low
+
+  * lib links fixed
+
+ -- Martin Haller <mah@grobi1.hamsternet>  Fri, 23 Jan 2009 12:53:57 +0100
+
+hcan (1.95-1) lenny; urgency=low
+
+  * Non-maintainer upload.
+  * package auf lenny umgebaut
+
+ -- Martin Haller <mah@grobi1.hamsternet>  Fri, 23 Jan 2009 12:50:28 +0100
+
+hcan (1.90-2) etch; urgency=low
+
+  * minor changes
+
+ -- Martin Haller <mah@troete.hamsternet>  Tue, 30 Dec 2008 19:49:53 +0100
+
+hcan (1.90-1) etch; urgency=low
+
+  * HCAN Prerelease fuer 2.0
+
+ -- Martin Haller <mah@iuse.org>  Fri, 26 Dec 2008 10:37:42 +0100
+
+hcan (1.0.4-1) etch; urgency=low
+
+  * Bugfix in libhcan++:
+  * bei char Feldern wurde die size nicht aus den eds-definitions.xml
+    uebernommen, es entstand dann: char[0] ow_id ''
+
+ -- Martin Haller <mah@troete.hamsternet>  Fri, 19 Sep 2008 10:32:28 +0200
+
+hcan (1.0.3-1) etch; urgency=low
+
+  * != und ! in hcandq eingebaut. 
+
+ -- Martin Haller <mah@iuse.org>  Mon, 15 Sep 2008 09:50:20 +0100
+
+hcan (1.0.2-1) etch; urgency=low
+
+  * telican: "set sysloglevel <level>" implementiert
+
+ -- Martin Haller <mah@troete.hamsternet>  Thu, 28 Aug 2008 08:20:49 +0200
+
+hcan (1.0.1-1) etch; urgency=low
+
+  * telican interpretiert jetzt HCAND_ADDRESS Environment Variable 
+
+ -- Martin Haller <mah@troete.hamsternet>  Thu, 31 Jul 2008 17:31:46 +0200
+
+hcan (1.0-4) etch; urgency=low
+
+  * lib fixes
+
+ -- Martin Haller <mah@iuse.oriuse.orgg>  Sun,  6 Jul 2008 15:21:44 +0100
+
+hcan (1.0-3) etch; urgency=low
+
+  * build fix
+
+ -- Martin Haller <mah@debian-arm>  Sun,  6 Jul 2008 14:59:48 +0100
+
+hcan (1.0-2) etch; urgency=low
+
+  * update
+
+ -- Martin Haller <mah@iuse.org>  Sun,  6 Jul 2008 14:36:54 +0100
+
+hcan-tools (1.0-1) unstable; urgency=low
+
+  * Release 1.0
+
+ -- Martin Haller <mah@iuse.org>  Fri, 28 Dec 2007 08:27:25 +0100
+
+hcan-tools (0.99.6-1) unstable; urgency=low
+
+  * diverse Bugfixe in der Firmware
+  * einige EDS Aenderungen
+
+ -- Martin Haller <mah@iuse.org>  Fri, 23 Nov 2007 10:02:13 +0100
+
+hcan-tools (0.99.5-1) unstable; urgency=low
+
+  * --syslog loggt nun auch die Source Adresse
+
+ -- Martin Haller <mah@iuse.org>  Sun, 07 Oct 2007 12:04:47 +0200
+
+hcan-tools (0.99.4-1) unstable; urgency=low
+
+  * EDS Aenderungen
+
+ -- Martin Haller <mah@iuse.org>  Mon, 01 Oct 2007 19:27:50 +0200
+
+hcan-tools (0.99.3-1) unstable; urgency=low
+
+  * telican kann jetzt auch ohne Farbe im Dump Mode ausgeben, das ist
+    fuer Logfiles interessant.
+
+ -- Martin Haller <mah@iuse.org>  Thu, 19 Jul 2007 18:43:55 +0200
+
+hcan-tools (0.99.2-1) unstable; urgency=low
+
+  * telican: einige neue EDS Block-Definitionen
+
+ -- Martin Haller <mah@iuse.org>  Sat, 14 Jul 2007 16:54:12 +0200
+
+hcan-tools (0.99.1-1) unstable; urgency=low
+
+  * telican: neu im EDS: powerport_page
+  * telican kann jetzt Strings mit Spaces als char[] values in 
+    EDS Objekte schreiben
+
+ -- Martin Haller <mah@iuse.org>  Sat, 23 Jun 2007 20:42:11 +0200
+
+hcan-tools (0.99-2) unstable; urgency=low
+
+  * telican: update wegen diverser EDS Aenderungen
+    ACHTUNG: EDS Config ist nicht mehr kompatibel!
+
+ -- Martin Haller <mah@iuse.org>  Sat, 23 Jun 2007 10:46:34 +0200
+
+hcan-tools (0.98.2-1) unstable; urgency=low
+
+  * telican: EDS update wegen rolladen; ACHTUNG: der rolladen-EDS
+    Block ist nicht mehr kompatibel; die Config muss vorher exportiert
+    und wieder importiert werden
+
+ -- Martin Haller <mah@iuse.org>  Tue, 19 Jun 2007 16:58:10 +0200
+
+hcan-tools (0.98.1-1) unstable; urgency=low
+
+  * telican: EDS update wegen rolladen_page
+
+ -- Martin Haller <mah@iuse.org>  Tue, 29 May 2007 18:37:15 +0200
+
+hcan-tools (0.98-2) unstable; urgency=low
+
+  * telican: Multicast Adressen zusammengefuegt (relevant fuer telican --timed)
+
+ -- Martin Haller <mah@iuse.org>  Sun, 06 May 2007 10:46:14 +0200
+
+hcan-tools (0.98-1) unstable; urgency=low
+
+  * controller-1612/telican: Zeitschaltuhr eingebaut (telican EDS update)
+
+ -- Martin Haller <mah@iuse.org>  Sun, 06 May 2007 09:46:14 +0200
+
+hcan-tools (0.97-1) unstable; urgency=low
+
+  * userpanel: Shortcut Feature eingebaut (telican EDS update)
+
+ -- Martin Haller <mah@iuse.org>  Thu, 19 Apr 2007 20:44:49 +0200
+
+hcan-tools (0.96-1) unstable; urgency=low
+
+  * telican/controller-1612: Rolladen auf Laufzeit umgestellt
+
+ -- Martin Haller <mah@iuse.org>  Tue, 17 Apr 2007 17:34:50 +0200
+
+hcan-tools (0.95-2) unstable; urgency=low
+
+  * eds update
+
+ -- Martin Haller <mah@iuse.org>  Fri, 13 Apr 2007 09:20:54 +0200
+
+hcan-tools (0.95-1) unstable; urgency=low
+
+  * initial release
+
+ -- Martin Haller <mah@iuse.org>  Mon, 19 Feb 2007 20:00:00 +0200
+
+

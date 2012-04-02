@@ -1,0 +1,12 @@
+[34;1m> reedkontakt
+[30;0mGruppe:  Status:   Name:
+   3      -       OG_K1-Doppel-Fenster1
+  38      -       OG_K1-Doppel-Fenster2
+   4      -       OG_K1-Einzel-Fenster
+  15      offen       OG_K2-Balkon-Tuer
+  24      -       OG_Schlafzimmer-Balkon-Tuer
+  58      -       OG_Schlafzimmer-Fenster1
+  25      -       OG_Schlafzimmer-Fenster2
+  34      -       OG_Bad-Fenster1
+  61      -       OG_Bad-Fenster2
+[34;1m> [30;0m
